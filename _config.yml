@@ -10,7 +10,7 @@ description: "Write an awesome description for your new site here. You can edit 
 # Introduce Me
 people:
 - name: Joohee Kwon
-  pic: joohee
+  pic: Joohee
   position: Sleep Lover
   social:
     - title: instagram
@@ -23,13 +23,13 @@ people:
 # Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
 social:
   - title: twitter
-    url: 
+    url:
   - title: facebook
     url: https://www.facebook.com/akrso06197.victan
   - title: stack-overflow
-    url: 
-  - title: bitbucket 
-    url: 
+    url:
+  - title: bitbucket
+    url:
   - title: github
     url: https://github.com/victoriagjh
 
