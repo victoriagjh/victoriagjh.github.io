@@ -1,6 +1,6 @@
 ---
 title:  "10942_팰린드롬?"
-date: {{ site.time }}
+date: 2019-09-20 14:18:00
 
 categories: algorithm
 ---
