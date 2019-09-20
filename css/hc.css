@@ -9,7 +9,10 @@ body
   border-top:solid #d90006;
   border-width:4px
 }
-
+br
+{
+  color : black;
+}
 h1,h2,h3,h4,h5,h6
 {
   font-family:"Helvetica Neue", helvetica, "Open Sans", sans-serif;
@@ -76,12 +79,12 @@ p
   transition:all .5s ease 0
 }
 
-.navbar 
+.navbar
 {
   display: none;
 }
 
-.navbar a 
+.navbar a
 {
   text-decoration: none;
   border-bottom: 1px #b1b1b1 solid;
@@ -715,7 +718,7 @@ time
 .inset {
   padding: 15px;
 }
-.navbar 
+.navbar
 {
   display: inherit;
   background-color: #ededed;
@@ -726,7 +729,7 @@ time
 
 @media screen and (max-width: 500px) {
   #welcome-greeting h2 {
-   font-size: 15px; 
+   font-size: 15px;
    transition: all 0.2s ease 0s;
    font-weight: 200;
    line-height: 30px;
