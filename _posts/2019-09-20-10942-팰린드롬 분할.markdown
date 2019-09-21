@@ -1,0 +1,84 @@
+---
+title:  "1509_팰린드롬 분할"
+date: 2019-09-20 21:14:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/1509.png)
+<br>
+
+### `Concept & Idea`
+이전에 풀었던 **팰린드롬?** 의 문제의 코드를 이용해서 문제를 해결할 수 있었다.<br>
+DP를 두 번에 걸쳐서 이용해야 했다.<br>
+일단 DP를 이용해서 i부터 j까지 팰린드롬인지 아닌지를 체크했다.<br>
+두번째는 약간 팰린드롬을 체크한 DP배열을 이용해서 분할의 최소값을 구하는 것이었다.<br>
+**D[i] = min(D[j-1]) + 1**<br>
+이 공식을 생각하는 것이 어려웠다.<br>
+
+이 문제를 풀때 런타임 에러를 두 번이나 실수했다.<br>
+우선 **팰린드롬?** 문제를 풀 때는 인덱스를 1부터 시작했는데, 이 문자열을 0부터 시작하려고 하니까 계속 실수를 하게 되었다. <br>
+##### 1. 두번쩨 for문으로 두 글자 팰린드롬을 체크할 때, 문자열 길이만큼 도는데 i와 i+1을 비교해서  실수를 했다.
+##### 2. 32번째 줄에 pel[i]>pel[j-1]+1 이 조건에서 처음에 j가 0일때, pel[-1]을 들어가게 되서 런타임 실수가 났다.
+<br>
+>     n=" "+n;
+
+이렇게 문자열에 시작에 공백을 줌으로써 에러를 해결할 수 있었다...
+<br>
+
+### `Code`
+{% highlight ruby %}
+#include <iostream>
+#include <string>
+using namespace std;
+string n;
+int pel[2501];
+bool dp[2501][2501];
+int main() {
+    cin>>n;
+    int len=n.size();
+    n=" "+n;
+    for(int i=1; i<=len; i++) {
+        dp[i][i]=true;
+    }
+    for(int i=1; i<len; i++) {
+        if(n[i]==n[i+1]){
+            dp[i][i+1]=true;
+            dp[i+1][i]=true;
+        }
+    }
+    for(int i=1; i<=len; i++) {
+        for(int j=1; j<len; j++) {
+            if(dp[i][j]==false && n[i]==n[j] && dp[i-1][j+1]){
+                dp[i][j]=true;
+                dp[j][i]=true;
+            }
+        }
+    }
+    for(int i=1; i<=len; i++) {
+        for(int j=1; j<=i; j++) {
+            if(dp[i][j]) {
+                //i서부터 j까지 펠린드롬임
+                if(pel[i]==0 || pel[i]>pel[j-1]+1){
+                    pel[i]=pel[j-1]+1;
+                }
+            }
+        }
+    }
+    cout<<pel[len]<<endl;
+}
+{% endhighlight %}
+<br>
+
+### `Fealing`
+7번 틀린 문제다. 백준이 런타임에러를 런타임에러라고 알려주지 않았다..<br>
+처음부터 런타임에러를 내도록 짠 내 잘못이지.. <br>
+index접근하는 for문을 짤 때, index-1 또는 index+1을 하게되면 forloop 횟수에 유의하며 코딩하자.
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/32f6c7eff05fa41ba78c392214762f37
+[problem advice]: https://www.acmicpc.net/problem/15552
