@@ -29,5 +29,10 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+  - scope:
+      path: ""
+      type: "devs"
+    values:
+      layout: "dev"
 
 remote_theme : victoriagjh/victoriagjh.github.io
