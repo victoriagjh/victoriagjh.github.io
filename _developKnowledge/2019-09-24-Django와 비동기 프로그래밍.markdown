@@ -1,5 +1,5 @@
 ---
-title:  "Django와 Wsgi"
+title:  "Django와 비동기 프로그래D"
 date: 2019-09-24 13:27:00
 
 categories: Dev Knowledge
@@ -7,78 +7,29 @@ categories: Dev Knowledge
 
 <br>
 
-### `Problem`
-![Image]({{ site.baseurl }}/images/1509.png)
+### `Django와 비동기 프로그래밍`
+두 달간 진행했던, Sentiment Analysis 웹페이지를 본격적으로 배포하기 위한 준비를 시작하고 있다.<br>
+Heroku에 우리의 프로젝트를 올리고, 데이터베이스를 연결하여 유저를 위한 서비스를 추가적으로 준비하고자 한다.<br>
+이제 더 안정적이고 효율적인 프로그래밍을 하기 위해, 세부적인 서버와 데이터베이스 등의 대해 공부를 시작한다.<br>
 <br>
 
-### `Concept & Idea`
-이전에 풀었던 **팰린드롬?** 의 문제의 코드를 이용해서 문제를 해결할 수 있었다.<br>
-DP를 두 번에 걸쳐서 이용해야 했다.<br>
-일단 DP를 이용해서 i부터 j까지 팰린드롬인지 아닌지를 체크했다.<br>
-두번째는 약간 팰린드롬을 체크한 DP배열을 이용해서 분할의 최소값을 구하는 것이었다.<br>
-**D[i] = min(D[j-1]) + 1**<br>
-이 공식을 생각하는 것이 어려웠다.<br>
-
-이 문제를 풀때 런타임 에러를 두 번이나 실수했다.<br>
-우선 **팰린드롬?** 문제를 풀 때는 인덱스를 1부터 시작했는데, 이 문자열을 0부터 시작하려고 하니까 계속 실수를 하게 되었다. <br>
-##### 1. 두번쩨 for문으로 두 글자 팰린드롬을 체크할 때, 문자열 길이만큼 도는데 i와 i+1을 비교해서  실수를 했다.
-##### 2. 32번째 줄에 pel[i]>pel[j-1]+1 이 조건에서 처음에 j가 0일때, pel[-1]을 들어가게 되서 런타임 실수가 났다.
-<br>
->     n=" "+n;
-
-이렇게 문자열에 시작에 공백을 줌으로써 에러를 해결할 수 있었다...
+### `비동기 프로그래밍`
+현재 우리 프로젝트의 주요한 문제상황은 **Manager** 객체를 두고, Request가 들어왔을 시 이 객체가 run하게 한다는 점이다.<br>
 <br>
 
-### `Code`
-{% highlight ruby %}
-#include <iostream>
-#include <string>
-using namespace std;
-string n;
-int pel[2501];
-bool dp[2501][2501];
-int main() {
-    cin>>n;
-    int len=n.size();
-    n=" "+n;
-    for(int i=1; i<=len; i++) {
-        dp[i][i]=true;
-    }
-    for(int i=1; i<len; i++) {
-        if(n[i]==n[i+1]){
-            dp[i][i+1]=true;
-            dp[i+1][i]=true;
-        }
-    }
-    for(int i=1; i<=len; i++) {
-        for(int j=1; j<len; j++) {
-            if(dp[i][j]==false && n[i]==n[j] && dp[i-1][j+1]){
-                dp[i][j]=true;
-                dp[j][i]=true;
-            }
-        }
-    }
-    for(int i=1; i<=len; i++) {
-        for(int j=1; j<=i; j++) {
-            if(dp[i][j]) {
-                //i서부터 j까지 펠린드롬임
-                if(pel[i]==0 || pel[i]>pel[j-1]+1){
-                    pel[i]=pel[j-1]+1;
-                }
-            }
-        }
-    }
-    cout<<pel[len]<<endl;
-}
-{% endhighlight %}
+### `GUNICORN`
+##### 1. Django와 함께 사용되는 용도로 Heroku에서 추천되는 HTTP server
+##### 2. 다이노에서 여러개의 Python 동시 프로세스를 실행할 수 있는 WSGI 어플리케이션을 위한 순수 Python으로 작성된 HTTP server
+##### 3. Gunicorn은 python WSGI HTTP Server이다. 상대적으로 가볍고 빠르다.
 <br>
 
-### `Fealing`
-7번 틀린 문제다. 백준이 런타임에러를 런타임에러라고 알려주지 않았다..<br>
-처음부터 런타임에러를 내도록 짠 내 잘못이지.. <br>
-index접근하는 for문을 짤 때, index-1 또는 index+1을 하게되면 forloop 횟수에 유의하며 코딩하자.
-
-Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
-
-[Vic's gist]: https://gist.github.com/victoriagjh/32f6c7eff05fa41ba78c392214762f37
-[problem advice]: https://www.acmicpc.net/problem/15552
+### `WSGI 파일`
+CGI - Command Gateway Interface의 일종이다.<br>
+WSGI는 CGI의 일종으로, Framework의 웹서버이다. Route Web에서는 표준 인터페이스로 개발되었다.<br>
+WSFI는 두 종류로 구분할 수 있는데, **Nigix나 Apache같은 Server often high profile 웹서버** 또는 **python script로 짜여진 web app** 으로 구분할 수 있다.<br>
+서버는 보통 web app에 있는 정보, callback 함수 등을 실행한다. request는 앱단에서 실행되며, response는 callback 함수를 이용해 서버로 되보내진다.<br>
+##### CALLBACK 함: 무엇인가 객체한테 시키고, 그 일이 끝날 때까지 기다리는 것이 아닌(동기적 프로그래밍), 일이 끝나면 다시 나를 호출하는 비동기적 방식의 함수로 사용된다.
+WSGI Server는 많은 request를 다룰 수 있도록 설계되었다. framework들은 스스로 수천개의 request를 실행하고 최고의 방법으로 처리할 수 있도록 설계되어 있지 않다.<br>
+Django의 경우, 단순히 manage.py runserver로 배포하면 안된다는 뜻이다.<br>
+WSGI는 python web의 개발 속도를 올려준다. <br>
+<br>
