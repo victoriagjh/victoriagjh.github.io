@@ -5,7 +5,7 @@ title: All Posts
   <div id="article">
   <h1>Dev Knowledge</h1>
   <ul class="posts">
-    {% for dev in site.DevelopKnowledge %}
+    {% for dev in site.developKnowledge %}
     <li><span><a href="{{ site.baseurl }}{{ dev.url }}">{{ dev.title }}</a><time class="pull-right post-list">{{ dev.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
     {% endfor %}
   </ul>
