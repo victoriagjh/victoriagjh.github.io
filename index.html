@@ -37,3 +37,37 @@ title: Herring Cove
   </ul>
 </div>
 {% endif %}
+
+{% if site.developKnowledge != empty %}
+<div class="recent-posts">
+  <h1>Recent Dev Knowledges</h1>
+  {% for dev in site.developKnowledge limit: 5 %}
+    {% if forloop.first %}
+      {% assign add_class = 'most-recent' %}
+      {% capture fresh_tag %}
+        &nbsp;<span class="badge"><smaller>FRESH</smaller></span>
+      {% endcapture %}
+    {% endif %}
+    <ul class="homepage-posts {{ add_class }}">
+      <li>
+        <span>
+          <h4>
+            <a href="{{ site.baseurl }}{{ dev.url }}">
+              {{ dev.title }}
+            </a>
+            {{ fresh_tag }}
+            <time class="pull-right">
+              {{ dev.date | date_to_string | date: "%b %-d, %Y"  }}
+            </time>
+          </h4>
+        </span>
+      </li>
+    </ul>
+    {% assign add_class = '' %}
+    {% assign fresh_tag = '' %}
+  {% endfor %}
+  <ul>
+    <a href="{{ site.baseurl }}/devKnowledge.html">View More...</a>
+  </ul>
+</div>
+{% endif %}
