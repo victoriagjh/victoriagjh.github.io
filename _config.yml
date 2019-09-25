@@ -27,7 +27,5 @@ defaults:
     values:
       layout: "post"
 
-collections:
-- _developKnowledge
 
 remote_theme : victoriagjh/victoriagjh.github.io
