@@ -26,10 +26,9 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-  - scope:
-      path: ""
-      type: "developKnowledge"
-    values:
-      layout: "dev"
+
+collections:
+- _developKnowledge
+    output: true
 
 remote_theme : victoriagjh/victoriagjh.github.io
