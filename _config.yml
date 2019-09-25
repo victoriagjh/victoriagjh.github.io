@@ -29,6 +29,5 @@ defaults:
 
 collections:
 - _developKnowledge
-    output: true
 
 remote_theme : victoriagjh/victoriagjh.github.io
