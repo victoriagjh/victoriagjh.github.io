@@ -27,7 +27,7 @@ defaults:
     values:
       layout: "post"
   - scope:
-      path: ""
+      path: "_developKnowledge"
       type: "developKnowledge"
     values:
       layout: "dev"
