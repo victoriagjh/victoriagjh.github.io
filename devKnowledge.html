@@ -4,6 +4,9 @@ title: All Posts
 <div class="container">
   <div id="article">
   <h1>Dev Knowledge</h1>
+  {% if site.developKnowledge != empty %}
+  <h1>엠티가 아닌데..</h1>
+  {% endif %}
   <ul class="posts">
     {% if site.developKnowledge != empty %}
     <h1>엠티가 아닌데..</h1>
