@@ -8,7 +8,7 @@ title: All Dev Knowledge
     {% for page in site.pages %}
       {% if page.categories contains 'devKnowledge'%}
       <div class="item">
-      <li><span><a href="{{ site.baseurl }}{{ post.url }}">{{ page.title }}</a><time class="pull-right post-list">{{ page.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
+      <li><span><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a><time class="pull-right post-list">{{ page.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
       </div>
       {% endif %}   <!-- resource-p -->
     {% endfor %}  <!-- page -->
