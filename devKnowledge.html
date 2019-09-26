@@ -5,15 +5,10 @@ title: All Dev Knowledge
   <div id="article">
   <h1>Dev Knowledge</h1>
   <ul class="posts">
-    {% for item in page.developKnowledge %}
-    <li><span><a href="{{ site.baseurl }}{{ item.url }}">{{ item.title }}</a><time class="pull-right post-list">{{ item.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
-    {% endfor %}
     {% for page in site.pages %}
       {% if page.categories contains 'devKnowledge'%}
       <div class="item">
-      <h3>{{page.title}}</h3>
-      <p>{{page.description}}</p>
-      <li><span><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a><time class="pull-right post-list">{{ post.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
+      <li><span><a href="{{ site.baseurl }}{{ post.url }}">{{ page.title }}</a><time class="pull-right post-list">{{ page.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
       </div>
       {% endif %}   <!-- resource-p -->
     {% endfor %}  <!-- page -->
