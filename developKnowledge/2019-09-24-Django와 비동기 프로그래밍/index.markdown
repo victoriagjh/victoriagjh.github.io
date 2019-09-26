@@ -2,7 +2,8 @@
 title:  "Django와 비동기 프로그래D"
 date: 2019-09-24 13:27:00
 
-categories: devKnowledge
+categories: [devKnowledge]
+resource: true
 ---
 
 <br>
