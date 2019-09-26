@@ -1,11 +1,11 @@
 ---
 title:  "Django와 비동기 프로그래밍"
 date: 2019-09-24 13:27:00
-
+description: The history of Development Study
 categories: [devKnowledge]
 resource: true
 ---
-
+# Django와 비동기 프로그래밍
 <br>
 
 ### `Django와 비동기 프로그래밍`
