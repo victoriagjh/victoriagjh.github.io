@@ -1,0 +1,65 @@
+---
+title:  "2193_이친수"
+date: 2019-09-26 1:15:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/9465.png)
+<br>
+
+### `Concept & Idea`
+문제 접근을 어떻게 할까 하다가 앞에 요소를 체크하려 했는데, 결국 과거의 값을 되돌아 생각해보는 것으로 생각해보니 해결되었다.<br>
+##### row가 0일 경우에, row가 1이고 && col이 자기 자신보다 -1,-2인 값중 큰 값을 누적하여 더한다.
+##### row가 1일 경우에, row가 0이고 && col이 자기 자신보다 -1,-2인 값중 큰 값을 누적하여 더한다.
+**DP배열에는 누적으로 최대값을 쌓아가고, 최종적으로 마지막 col의 최댓값을 출력하면 해결되는 문제였다.**
+<br>
+
+### `Code`
+{% highlight ruby %}
+#include <iostream>
+using namespace std;
+int t;
+int map[2][100001];
+int cnt=0;
+int dp[2][100001];
+int main() {
+    cin>>t;
+    for(int i=0; i<t; i++) {
+        int n;
+        cin>>n;
+        for(int r=0; r<2; r++) {
+            for(int j=0; j<n; j++) {
+                cin>>map[r][j];
+            }
+        }
+        dp[0][0]=map[0][0]; dp[1][0]=map[1][0];
+        if(n>1) {
+            dp[0][1]=map[0][1]+map[1][0];
+            dp[1][1]=map[1][1]+map[0][0];
+        }
+        for(int j=2; j<n; j++) {
+            for(int r=0; r<2; r++) {
+                if(r==0) {
+                    dp[r][j]=map[r][j]+max(dp[1][j-2], dp[1][j-1]);
+                } else if(r==1){
+                    dp[r][j]=map[r][j]+max(dp[0][j-2], dp[0][j-1]);
+                }
+            }
+        }
+        cout<<max(dp[0][n-1],dp[1][n-1])<<endl;
+    }
+}
+{% endhighlight %}
+<br>
+
+### `Fealing`
+다이나믹 프로그래밍 문제를 한번에 스스로 맞춰버렸다😆<br>
+정말 너무 기분이 좋구만!!<br>
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/e28f909153f1613a91390093c55b6e13
