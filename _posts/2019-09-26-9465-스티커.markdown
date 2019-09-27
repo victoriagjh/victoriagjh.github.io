@@ -1,6 +1,6 @@
 ---
-title:  "2193_이친수"
-date: 2019-09-26 1:15:00
+title:  "9465_스티커"
+date: 2019-09-26 17:08:00
 
 categories: algorithm
 ---
