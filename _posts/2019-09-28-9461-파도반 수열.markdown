@@ -1,0 +1,51 @@
+---
+title:  "9461_파도반 수열"
+date: 2019-09-28 15:25:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/9461.png)
+<br>
+
+### `Concept & Idea`
+어찌됫든 수열이다. 어떻게든 풀어보려고 규칙을 찾으려 했더니 간단한 문제였다. <br>
+원래는 dp배열을 2차원으로 만들어서, 변을 공유했는지 안했는지 체크하는 3개의 col을 만드려했는데, 규칙이 보이지 않아서 바로 문제를 다시 읽어보았다. <br>
+그랬더니 새로 생성되는 수가 그냥, i-2와 i-3의 합으로 해결된다는 것을 알게 되었다. <br>
+왜 범위가 int를 넘어가는지 이해가 잘 안간다. <br>
+100밖에 안되는데.. 질문검색에도 어느 순간부터 int를 넘어간다는 대답밖에 없었다. <br>
+앞으로 dp문제를 풀고 틀리면 그냥 배열 범위를 바꾸어 봐야겠다... <br>
+<br>
+
+### `Code`
+{% highlight ruby %}
+#include <iostream>
+using namespace std;
+int t;
+long long p[101];
+int main() {
+    cin>>t;
+    p[1]=1;p[2]=1;
+    for(int i=3; i<101; i++) {
+        p[i]=p[i-2]+p[i-3];
+    }
+    for(int i=0; i<t; i++) {
+        int n;
+        cin>>n;
+        cout<<p[n]<<endl;
+    }
+}
+
+{% endhighlight %}
+<br>
+
+### `Fealing`
+응~ 내가 풀었다. <br>
+이 역시 수열이라고 생각하고 규칙을 찾아보려 했더니 바로 보여서 기분이 좋았다. <br>
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/ee543a520595a51b0dd6dcf25e0cb61d
