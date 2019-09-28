@@ -51,4 +51,4 @@ int main() {
 
 Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
 
-[Vic's gist]: https://gist.github.com/victoriagjh/3aeb2b19f52f86f43a2ee3aad2c61b38
+[Vic's gist]: https://gist.github.com/victoriagjh/3b4186ec8266b915103b8833b0e67b23
