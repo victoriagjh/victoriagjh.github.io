@@ -1,0 +1,54 @@
+---
+title:  "2133_타일 채우기"
+date: 2019-09-28 14:52:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/2133.png)
+<br>
+
+### `Concept & Idea`
+처음 주어진 3*2의 타일의 경우의 수가 3개이다. <br>
+하나 하나 쪼개서 생각해보면, 맨 처음 타일이 왔을 때 뒤에 3개를 다시 붙이면 다른 경우의 수를 만들 수 있다. <br>
+그래서 바로 생각할 수 있는 예시가, 3*dp[i-2]이다. <br>
+그런데 이 3개만으로 끝나지 않고, 새로운 경우의 수가 2개씩 더 생겨난다. <br>
+그래서 2*dp[i-4]+ 2*dp[i-6]등등을 더해가는 것으로 문제를 해결 할 수 있었다. <br>
+dp[0]을 1로 초기화해 둠으로 해결할 수 있었다. <br>
+
+### `Code`
+{% highlight ruby %}
+
+#include <iostream>
+using namespace std;
+int n;
+int dp[31];
+int main() {
+    cin>>n;
+    dp[0]=1;
+    dp[2]=3;
+    for(int i=4; i<=n; i++) {
+        for(int j=1; j*2<=i; j++) {
+            if(j==1) {
+                dp[i]+=dp[i-j*2]*3;
+            } else {
+                dp[i]+=dp[i-j*2]*2;
+            }
+        }
+    }
+    cout<<dp[n]<<endl;
+}
+
+{% endhighlight %}
+<br>
+
+### `Fealing`
+문제를 고민해보는 시간을 좀 더 늘릴 필요성이 있을 것 같다.. <br>
+차근 차근 생각해보면 혼자 생각할 수 있었을 것 같다. <br>
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/3aeb2b19f52f86f43a2ee3aad2c61b38
