@@ -1,0 +1,70 @@
+---
+title:  "1699_제곱수의 합"
+date: 2019-09-28 00:33:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/1699.png)
+<br>
+
+### `Concept & Idea`
+처음에는 굳이 DP로 풀어야하나?라는 의문이 들어서 그냥 생각대로 풀었다.<br>
+수학문제 해결하듯이 풀어낸 코드는 다음과 같다.<br>
+
+{% highlight ruby %}
+#include <iostream>
+#include <cmath>
+using namespace std;
+int n;
+int main() {
+    cin>>n;
+    int cnt=0;
+    while(n!=0) {
+        int t=int(sqrt(n));
+        n-=t*t;
+        cnt+=1;
+    }
+    cout<<cnt<<endl;
+}
+{% endhighlight %}
+
+역시나 틀렸고 그 반례는 다음과 같다.<br>
+12의 경우를 생각해보면, 9+1+1+1이 최소라고 생각했지만 4+4+4로 정답은 3이었다.<br>
+그래서 다시 DP로 돌아왔다.<br>
+이 문제에서 가장 중요한 것은 제곱수이다.<br>
+해당하는 map[i]에 i-j*j에 해당하는 수의 +1보다 값이 큰지 작은지를 비교하면 해결할 수 있는 문제였다.<br>
+이 j*j를 포문으로 풀면 금방 해답을 찾을 수 있었다.<br>
+
+### `Code`
+{% highlight ruby %}
+#include <iostream>
+#include <vector>
+using namespace std;
+int n;
+int map[100001];
+int main() {
+    cin>>n;
+    for(int i=1; i<=n; i++) {
+        map[i]=i;
+        for(int j=1; j*j<=i; j++) {
+            if(map[i]>map[i-j*j]+1) {
+                map[i]=map[i-j*j]+1;
+            }
+        }
+    }
+    cout<<map[n]<<endl;
+}
+{% endhighlight %}
+<br>
+
+### `Fealing`
+역시 분류가 다이나믹 프로그래밍으로 되어있는것은 다 그 이유가 있는 것이다.. <br>
+손으로 하나하나 써가면서 진지하게 고민해보아야 한다. <br>
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/9a978d438a84507d7e7092ef4a56d25a
