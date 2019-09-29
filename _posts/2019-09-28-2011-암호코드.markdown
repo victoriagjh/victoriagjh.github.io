@@ -1,0 +1,60 @@
+---
+title:  "2011_암호코드"
+date: 2019-09-28 17:10:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/2011.png)
+<br>
+
+### `Concept & Idea`
+문제 상황을 좀 더 간결히 해서, int x에 값을 넣음으로 조건문이 되게 간단해 질 수 있었다. <br>
+자리가 1자리일 때의 경우와, 2자리가 가능할 때의 경우를 나눠서 생각했으면 빠르게 풀었을 것 같다. <br>
+또한 더할 때 **dp[i-1]%1000000** 라고 풀었었는데, 이렇게 풀면 안된다.
+더하고 나서 따로 mod를 취해주어야 한다...😢<br>
+
+### `Code`
+{% highlight ruby %}
+#include <iostream>
+#include <string>
+using namespace std;
+string n;
+int dp[5001];
+int main() {
+    cin>>n;
+    int s=n.size();
+    dp[0]=1;
+    n=" "+n;
+    for(int i=1; i<=s; i++) {
+        int x=n[i]-'0';
+        if(x>=1 && x<=9) {
+            dp[i]+=dp[i-1];
+            dp[i]%=1000000;
+        }
+        if(i==1 || n[i-1]=='0')
+            continue;
+        x+=(n[i-1]-'0')*10;
+        if(x>=10 && x<=26) {
+            dp[i]+=dp[i-2];
+            dp[i]%=1000000;
+        }
+    }
+    cout<<dp[s]<<endl;
+}
+{% endhighlight %}
+
+<br>
+
+### `Fealing`
+처음 생각했던 것과 자꾸 다른 예시가 나오니 조건문을 너무 더럽게 붙여서 풀지 못했다. <br>
+생각을 간결히 하고, 아스키코드를 잘 이용해서 문제를 풀어보자 <br>
+자꾸 전석희 교수님이 생각나는 문제다.. 이 문제는.. "-'0'"때문인지... <br>
+
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/94caa0b6d5894366e93e6fffd8c83ff5
