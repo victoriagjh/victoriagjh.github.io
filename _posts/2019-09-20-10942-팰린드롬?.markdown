@@ -33,7 +33,7 @@ UCI 프로그램을 연장하고 알고리즘 스터디를 열었다. 이전에�
 <br>
 
 ### `Code`
-{% highlight ruby %}
+{% highlight c++ %}
 #include <iostream>
 using namespace std;
 int n;

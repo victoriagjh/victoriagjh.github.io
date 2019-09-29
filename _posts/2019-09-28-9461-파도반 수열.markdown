@@ -21,7 +21,7 @@ categories: algorithm
 <br>
 
 ### `Code`
-{% highlight ruby %}
+{% highlight c++ %}
 #include <iostream>
 using namespace std;
 int t;
