@@ -1,0 +1,55 @@
+---
+title:  "12738_가장 긴 증가하는 부분 수열3"
+date: 2019-10-02 12:49:00
+
+categories: algorithm
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/12738.png)
+<br>
+
+### `Concept & Idea`
+LIS 알고리즘에 대해 공부하였다. <br>
+벡터는 lower_bound를 찾기 위한 벡터 배열이다. <br>
+##### 1. 해당하는 벡터 배열의 가장 마지막 요소보다 크기가 더  크면, 배열에 그냥 푸쉬해준다.
+##### 2. 해당하는 벡터 배열의 가장 마지막 요소보다 크기가 더 작으면, 벡터 배열에 적절한 요소를 찾아 넣어준다.
+이때 적절한 위치를 찾는데, 어차피 sort되어있는 배열이기 때문에 lower_bound를 이용하여 index를 찾고 값을 갱신해준다. <br>
+**lower_bound를 사용할 때는, 해당 배열의 첫 주소, 끝 주소, 찾고싶은 값을 매개변수로 넣고 배열의 시작 주소를 빼주어야 index값을 구할 수 있다.** <br>
+
+### `Code`
+{% highlight c++ %}
+#include <iostream>
+#include <vector>
+using namespace std;
+int n;
+long long map[1000001];
+vector<long long> t;
+int main() {
+    cin>>n;
+    for(int i=1; i<=n; i++)
+        cin>>map[i];
+    t.push_back(map[1]);
+    for(int i=2; i<=n; i++) {
+        if(map[i]>t[t.size()-1]) {
+            t.push_back(map[i]);
+        } else {
+            int lowIndex = lower_bound(t.begin(), t.end(), map[i])-t.begin();
+            t[lowIndex]=map[i];
+        }
+    }
+    cout<<t.size()<<endl;
+}
+
+{% endhighlight %}
+<br>
+
+### `Fealing`
+Lower_bound를 쓰는 법을 잘 공부하면 진짜 간단하고 짧게 구현할 수 있을 것 같다. <br>
+**중요한 것은 내가 만든 벡터가 증가하는 부분 수열과 다르다는 점이다.** <br>
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/ee543a520595a51b0dd6dcf25e0cb61d
