@@ -41,8 +41,7 @@ title: Herring Cove
 {% if site.developKnowledge != empty %}
 <div class="recent-posts">
   <h1>Recent Dev Knowledges</h1>
-  {% assign sorted = (site.pages | sort: 'date') | reverse %}
-  {% for page in site.sorted limit: 5 %}
+  {% for page in site.pages limit: 5 %}
   {% if page.categories contains 'devKnowledge'%}
     {% if forloop.first %}
       {% assign add_class = 'most-recent' %}
