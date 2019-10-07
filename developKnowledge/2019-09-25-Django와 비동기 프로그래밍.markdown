@@ -156,5 +156,3 @@ def quick_task(x):
   quick_task.apply_async(args=[100], queue='quick_tasks')
 {% endhighlight %}
 해당 코드를 실행시키면, A는 A대로, B는 B대로 실행 시킬 수 있다.
-
-### Docker

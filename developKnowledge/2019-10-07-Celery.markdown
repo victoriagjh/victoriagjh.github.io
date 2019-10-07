@@ -1,0 +1,92 @@
+---
+title:  "Celery"
+date: 2019-10-07 16:46:00
+description: The history of Development Study
+categories: [devKnowledge]
+resource: true
+---
+# Celery with PostgreSQL
+<br>
+
+### `Celery - Worker`
+##### Starting the worker
+{% highlight python %}
+$ celery -A proj worker -l info
+{% endhighlight %}
+해당 명령어를 통해서 project의 worker를 실행시킬 수 있다. <br>
+또한 하나의 머신에서 여러 worker를 실행시킬 수 있는데, 이때 각각의 worker에게 **hostname** argument를 이용하여 name을 붙여주어야 한다. <br>
+
+##### Stoping the worker
+Shutdown은 term신호를 통해 실행할 수 있다. <br>
+종료가 시작되면 worker는 실제로 종료되기 전에, 현재 실행중인 모든 작업을 완료한다. 실행하던 작업이 중요한 경우 KILL신호 전송과 같이 과감한 작업을 수행하기 전에 작업이 완료될 때까지 기다려야 한다. <br>
+Worker가 상당한 시간이 지난 후 무한루프 또는 이와 유사한 상태로 갇혀있어 종료되지 않을 때, **acks_late** 옵션을 설정하고, KILL신호를 사용하여 작업자를 강제 종료할 수 있다. <br>
+{% highlight python %}
+$ celery -A proj worker --loglevel=INFO --concurrency=10 -n worker1@%h
+$ celery -A proj worker --loglevel=INFO --concurrency=10 -n worker2@%h
+$ celery -A proj worker --loglevel=INFO --concurrency=10 -n worker3@%h
+{% endhighlight %}
+이름이 다른 각각의 worker를 생성해서 같은 머신에서 동작하게 할 수 있다. <br>
+
+##### Restarting the worker
+worker를 재시작하기 위해선, Term 신호를 보내고, 새로운 instance를 시작해야한다. <br>
+가장 쉬운 방법은 **celery multi** 명령어를 이용하는 것이다. <br>
+또한 HUP 신호를 이용하여 재시작할 수있다. 하지만 이 방법은 추천되는 방식은 아니다. 또한 이 방식은 macOS에서는 지원되지 않는다. <br>
+
+### Celery Handling Test
+When the user input file and click the submit Button, the server get all unassigned request list and run celery tasks.<br>
+In the tasks, it change the project status 'unassigned' to 'pending'. <br>
+And It generate a random number and sleep for that time, And change the project status 'pending' to 'success'. <br>
+
+In this process, I think it is better that when user send a request, the server just execute that request. <br>
+There can be a unassigned or failure request, so we make a PostgreSQL checker like a manager and that checker calls the run function for that request. <br>
+
+![Image]({{ site.baseurl }}/images/django_celery.png)
+
+I can't find the celery get the request list from the PostgreSQL. <br>
+
+### Celery Task
+##### delay()
+The **delay()** method is convenient as it looks like calling a regular function. <br>
+delay() is clearly convenient, but if I want to set additional execution options, I have to use **apply_async()**. <br>
+
+##### Linking
+The callback task will be applied with the result of the parent task as a partial argument. <br>
+
+{% highlight python %}
+add.apply_async((2, 2), link=add.s(16))
+{% endhighlight %}
+
+The result of the first task (4) will be sent to a new task to next function. <br>
+I can also cause a callback to be applied if task raises an exception, but this behaves differently from a regular callback in that it will be passed the id of the parent task, not the result. - 결과가 아니라 상위 태스크의 아이디값이 전달된다는 점이 일반 콜백과 다른 점이다. <br>
+link를 이용해서 Send Email 기능을 짤 수 있을 것 같다. <br>
+
+##### Celery Exception Handling
+1. **Linking Error_Handler**
+{% highlight python %}
+@app.task
+def error_handler(uuid):
+    result = AsyncResult(uuid)
+    exc = result.get(propagate=False)
+    print('Task {0} raised exception: {1!r}\n{2!r}'.format(
+          uuid, exc, result.traceback))
+
+add.apply_async((2, 2), link_error=error_handler.s())
+{% endhighlight %}
+The error_handler can be added to the task using the link_error execution option. <br>
+에러가 발생할 때, project_status를 "Failure"라고 바꿀 것이고, PostgreSQL Listener가 Failure 또는 Unassigned 작업을 처리하도록 구현하면 될 것 같다. <br>
+
+2. **Get return value**
+{% highlight python %}
+run.delay(unassignedRequest[i].user_id)
+{% endhighlight %}
+Now my test code is like this. <br>
+I can get a return value like **result = run.delay(unassignedRequest[i].user_i)**. <br>
+And I can know the result status. <br>
+
+**??? : If celery tasks return any result, Do I have to use get() or forget() function??** <br>
+
+3. **If a Request stuck in an infinite-loop!**
+-> We can handle this error with Error_Handler(timeout error).  <br>
+If error is occured, then that function change the project_status "pending" to "failure". <br>
+
+### PostgreSQL - Listener
