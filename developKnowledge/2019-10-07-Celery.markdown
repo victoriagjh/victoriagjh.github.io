@@ -32,7 +32,7 @@ worker를 재시작하기 위해선, Term 신호를 보내고, 새로운 instanc
 가장 쉬운 방법은 **celery multi** 명령어를 이용하는 것이다. <br>
 또한 HUP 신호를 이용하여 재시작할 수있다. 하지만 이 방법은 추천되는 방식은 아니다. 또한 이 방식은 macOS에서는 지원되지 않는다. <br>
 
-### Celery Handling Test
+### `Celery Handling Test`
 When the user input file and click the submit Button, the server get all unassigned request list and run celery tasks.<br>
 In the tasks, it change the project status 'unassigned' to 'pending'. <br>
 And It generate a random number and sleep for that time, And change the project status 'pending' to 'success'. <br>
@@ -44,7 +44,7 @@ There can be a unassigned or failure request, so we make a PostgreSQL checker li
 
 I can't find the celery get the request list from the PostgreSQL. <br>
 
-### Celery Task
+### `Celery Task`
 ##### delay()
 The **delay()** method is convenient as it looks like calling a regular function. <br>
 delay() is clearly convenient, but if I want to set additional execution options, I have to use **apply_async()**. <br>
@@ -89,4 +89,4 @@ And I can know the result status. <br>
 -> We can handle this error with Error_Handler(timeout error).  <br>
 If error is occured, then that function change the project_status "pending" to "failure". <br>
 
-### PostgreSQL - Listener
+### `PostgreSQL - Listener`
