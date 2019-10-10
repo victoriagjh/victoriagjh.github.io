@@ -88,5 +88,3 @@ And I can know the result status. <br>
 3. **If a Request stuck in an infinite-loop!**
 -> We can handle this error with Error_Handler(timeout error).  <br>
 If error is occured, then that function change the project_status "pending" to "failure". <br>
-
-### `PostgreSQL - Listener`
