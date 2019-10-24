@@ -1,5 +1,5 @@
 ---
-title:  "캡틴 이다솜"
+title:  "1660_캡틴 이다솜"
 date: 2019-10-22 23:20:00
 
 categories: algorithm
