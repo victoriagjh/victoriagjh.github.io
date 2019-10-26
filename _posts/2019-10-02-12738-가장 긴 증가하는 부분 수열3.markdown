@@ -3,6 +3,7 @@ title:  "12738_가장 긴 증가하는 부분 수열3"
 date: 2019-10-02 12:49:00
 
 categories: algorithm
+comments: true
 ---
 
 <br>

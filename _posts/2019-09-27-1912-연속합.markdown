@@ -3,6 +3,7 @@ title:  "1912_연속합"
 date: 2019-09-27 17:42:00
 
 categories: algorithm
+comments: true
 ---
 
 <br>

@@ -3,6 +3,7 @@ title:  "2011_암호코드"
 date: 2019-09-28 17:10:00
 
 categories: algorithm
+comments: true
 ---
 
 <br>

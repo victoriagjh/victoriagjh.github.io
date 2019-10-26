@@ -3,6 +3,7 @@ title:  "9465_스티커"
 date: 2019-09-26 17:08:00
 
 categories: algorithm
+comments: true
 ---
 
 <br>

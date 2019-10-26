@@ -3,6 +3,7 @@ title:  "1699_제곱수의 합"
 date: 2019-09-28 00:33:00
 
 categories: algorithm
+comments: true
 ---
 
 <br>

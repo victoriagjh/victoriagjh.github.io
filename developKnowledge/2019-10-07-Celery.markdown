@@ -4,6 +4,7 @@ date: 2019-10-07 16:46:00
 description: The history of Development Study
 categories: [devKnowledge]
 resource: true
+comments: true
 ---
 # Celery with PostgreSQL
 

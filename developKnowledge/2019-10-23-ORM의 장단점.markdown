@@ -4,6 +4,7 @@ date: 2019-10-23 10:57:00
 description: The history of Development Study
 categories: [devKnowledge]
 resource: true
+comments: true
 ---
 # ORM의 장단점
 <br>

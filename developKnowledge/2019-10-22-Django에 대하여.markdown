@@ -4,6 +4,7 @@ date: 2019-10-22 00:22:00
 description: The history of Development Study
 categories: [devKnowledge]
 resource: true
+comments: true
 ---
 # Django에 대하여
 Django는 파이썬 기반 웹 프레임워크로, 빠르고 깔끔한 개발, 실용적인 디자인을 동려합니다. <br>

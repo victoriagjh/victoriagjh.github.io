@@ -1,7 +1,7 @@
 ---
 title:  "10942_팰린드롬?"
 date: 2019-09-20 14:18:00
-
+comments: true
 categories: algorithm
 ---
 

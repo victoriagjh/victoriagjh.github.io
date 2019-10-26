@@ -4,6 +4,7 @@ date: 2019-10-01 20:23:00
 description: The history of Development Study
 categories: [devKnowledge]
 resource: true
+comments: true
 ---
 # Progressive Web App이란?
 <br>
