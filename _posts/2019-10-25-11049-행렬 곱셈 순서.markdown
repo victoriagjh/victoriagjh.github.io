@@ -3,6 +3,7 @@ title:  "11049-행렬 곱셈 순서"
 date: 2019-10-25 15:38:00
 
 categories: algorithm
+comments: true
 ---
 
 <br>
