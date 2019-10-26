@@ -29,12 +29,12 @@ defaults:
       layout: "post"
   - scope:
       path: ""
-      type: "developKnowledge"
+      type: "devKnowledge"
     values:
-      layout: "developKnowledge"
+      layout: "devKnowledge"
 
 collections:
-  developKnowledge:
+  devKnowledge:
     output: true
 
 layout: default
