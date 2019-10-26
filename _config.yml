@@ -27,7 +27,8 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-
+       
+layout: default
 comments: true
 
 remote_theme : victoriagjh/victoriagjh.github.io
