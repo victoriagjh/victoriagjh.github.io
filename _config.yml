@@ -27,6 +27,15 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+  - scope:
+      path: ""
+      type: "developKnowledge"
+    values:
+      layout: "developKnowledge"
+
+collections:
+  developKnowledge:
+    output: true
 
 layout: default
 comments: true
