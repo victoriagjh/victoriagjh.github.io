@@ -38,11 +38,10 @@ title: Herring Cove
 </div>
 {% endif %}
 
-{% if site.developKnowledge != empty %}
+{% if site.devKnowledge != empty %}
 <div class="recent-posts">
   <h1>Recent Dev Knowledges</h1>
-  {% for page in site.pages reversed limit: 5%}
-  {% if page.categories contains 'devKnowledge'%}
+  {% for post in site.devKnowledge limit: 5 %}
     {% if forloop.first %}
       {% assign add_class = 'most-recent' %}
       {% capture fresh_tag %}
@@ -53,12 +52,12 @@ title: Herring Cove
       <li>
         <span>
           <h4>
-            <a href="{{ site.baseurl }}{{ page.url }}">
-              {{ page.title }}
+            <a href="{{ site.baseurl }}{{ post.url }}">
+              {{ post.title }}
             </a>
             {{ fresh_tag }}
             <time class="pull-right">
-              {{ page.date | date_to_string | date: "%b %-d, %Y"  }}
+              {{ post.date | date_to_string | date: "%b %-d, %Y"  }}
             </time>
           </h4>
         </span>
@@ -66,7 +65,6 @@ title: Herring Cove
     </ul>
     {% assign add_class = '' %}
     {% assign fresh_tag = '' %}
-    {% endif %}   <!-- resource-p -->
   {% endfor %}
   <ul>
     <a href="{{ site.baseurl }}/devKnowledge.html">View More...</a>
