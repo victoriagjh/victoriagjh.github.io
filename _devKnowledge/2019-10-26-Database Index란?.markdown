@@ -6,7 +6,8 @@ categories: [devKnowledge]
 resource: true
 comments: true
 ---
-# ORM의 장단점
+# Database Index란?
 <br>
 
 ### `Database Index란?`
+INDEX란 RDBMS에서 검색속도를 높이기 위해 사용하는 하나의 기술입니다.
