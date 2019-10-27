@@ -1,5 +1,5 @@
 ---
-title:  "데이터베이스 인덱스란?"
+title:  "데이터베이스 인덱스란"
 date: 2019-10-26 16:22:00
 description: The history of Development Study
 categories: [devKnowledge]
