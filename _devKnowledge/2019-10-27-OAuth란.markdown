@@ -1,5 +1,5 @@
 ---
-title:  "OAuth란?"
+title:  "OAuth란"
 date: 2019-10-27 22:25:00
 description: The history of Development Study
 categories: [devKnowledge]
