@@ -33,6 +33,10 @@ defaults:
     values:
       layout: "devKnowledge"
 
+collections:
+  devKnowledge:
+    output: true
+
 layout: default
 comments: true
 
