@@ -1,0 +1,65 @@
+---
+title:  "2169-로봇 조종하기"
+date: 2019-11-01 16:22:00
+
+categories: algorithm
+comments: true
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/2196.png)
+<br>
+
+### `Concept & Idea`
+최대 배열의 크기가 1002, 1002이기 때문에 백트랙킹으로는 문제를 해결할 수 없다.
+tmp[2][1002] 배열은 좌측에서 오는 값을 기록, 우측에서 오는 값을 기록하는 배열이다.
+이런 방식으로도 메모제이션을 진행할 수 있다는,, 잘 기억해두자!!
+
+### `Code`
+{% highlight c++ %}
+#include <iostream>
+#include <queue>
+using namespace std;
+int map[1002][1002];
+int dp[1002][1002];
+int tmp[2][1002];
+int n,m;
+int main(){
+    cin>>n>>m;
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=m; j++) {
+            scanf("%d",&map[i][j]);
+            if(i==1) {
+                dp[i][j]=dp[i][j-1]+map[i][j];
+            }
+        }
+    }
+    for(int i=2; i<=n; i++) {
+        tmp[0][0]=dp[i-1][1];
+        for(int j=1; j<=m; j++) {
+            tmp[0][j]=max(dp[i-1][j],tmp[0][j-1])+map[i][j];
+        }
+        tmp[1][m+1]=dp[i-1][m];
+        for(int j=m; j>=1; j--) {
+            tmp[1][j]=max(dp[i-1][j],tmp[1][j+1])+map[i][j];
+        }
+        for(int j=1; j<=m; j++) {
+                dp[i][j] = max(tmp[0][j],tmp[1][j]);
+        }
+    }
+    cout<<dp[n][m]<<endl;
+}
+{% endhighlight %}
+<br>
+
+### `Fealing`
+그래프 탐색 중독자인가보다. 좌 우 아래를 탐색한다는 것을 보고, 백트랙킹으로 문제를 풀어버렸다. <br>
+근데 1002, 1002면 시간초과가 당연히 날 수 밖에 없는데, 고집부리고 백트랙킹으로 해결한 것 같다. <br>
+좌측에서 오는 값, 우측에서 오는 값을 기록해놓는 배열을 하나 더 두면 쉽게 해결할 수 있는 문제였다. <br>
+다음에도 이런 문제가 나왔으면 좋겠다. <br>
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/f1a9c3111dd8fd65594c1b7ccc4ba4ed
