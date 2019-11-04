@@ -58,7 +58,7 @@ OAuth 1.0에서는 HTTPS가 필수로 필요하다. URL 인코딩이 필요없�
 **Access Token의 Life-time을 지정하여 만료일을 설정 가능하다!**
 커다란 서비스의 경우, 인증 서버를 분리하거나 다중화할 수 있어야 하는데, 2.0에서는 Authorization Server의 기능을 명확히 하여 이를 고려하였다.
 
-![Image]({{ site.baseurl }}/images/oauth_1.0.png)
+![Image]({{ site.baseurl }}/images/oauth_2.0.png)
 
 EX)
 - Client가 어떤 사이트를 이용해보려고 하는데, Facebook을 통해서 가입할 수 있다는 버튼을 발견한다.
