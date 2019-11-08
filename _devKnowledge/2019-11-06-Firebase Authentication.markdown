@@ -57,12 +57,18 @@ firebase.auth().signOut()
  });
 {% endhighlight %}
 
-위 함수들 같은 경우, promises를 반환하고 새로운 유저 등록은 자동으로 사용자에게 sign한다. 세 함수 모두, onAuthStateChanged observer를 호출한다. 그래서 handler에서 성공적인 auth changes에 대한 경우를 처리해주어야한다.
+위 함수들 같은 경우, promises를 반환하고 새로운 유저 등록은 자동으로 사용자에게 sign한다. 세 함수 모두, onAuthStateChanged observer를 호출한다. 그래서 handler에서 성공적인 auth changes에 대한 경우를 처리해주어야한다.<br>
 
 ### `Auth Service Linking`
 대부분의 어플리케이션들에서는 email,password, Google, Facebook 등 다수 로그인 방식을 제공한다. 유저는 지난번에 그들이 사용하는 앱중 어떤 계정으로 로그인했는지 잊어버리는 경우가 있다. 그래서 Firebase는 다수의 인증 방식을 링크해주는 기능을 제공한다. <br>
 예를 들어, email/password 계정을 만들고, 다른 디바이스에서 Google로 로그인을 하려 하면 파이어베이스에서 존재하는 email/password 계정과 해당 Google 계정을 즉시 링킹해준다. <br>
-링크된 Auth 계정들은 Unique Identifier(UID)를 공유하며 Firebase Auth Console 페이지에서 싱글 유저 진입에 대해 띄워줄 것이다.
+링크된 Auth 계정들은 Unique Identifier(UID)를 공유하며 Firebase Auth Console 페이지에서 싱글 유저 진입에 대해 띄워줄 것이다. <br>
+
+### `ID Tokens과 Refresh Tokens`
+ID Token 👉 해당 아이다와 패스워드에 대해서 발급되는 토큰으로 1시간동안 유지되는 토큰이다. <br>
+Refresh Token 👉 ID Token이 만료되었을 때, Refresh Token을 이용하여 갱신할 수 있다. 이 토큰의 수명은 1년이다.<br>
+
 
 ### `참고자료`
 How to Firebase? : [Chris Esplin](https://howtofirebase.com/firebase-authentication-for-web-d58aad62cf6d)<br>
+Demystifying Firebase Auth Tokens : [Jacob Wenger](https://medium.com/@jwngr/demystifying-firebase-auth-tokens-e0c533ed330c)
