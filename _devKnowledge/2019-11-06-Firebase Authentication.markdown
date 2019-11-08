@@ -64,4 +64,5 @@ firebase.auth().signOut()
 예를 들어, email/password 계정을 만들고, 다른 디바이스에서 Google로 로그인을 하려 하면 파이어베이스에서 존재하는 email/password 계정과 해당 Google 계정을 즉시 링킹해준다. <br>
 링크된 Auth 계정들은 Unique Identifier(UID)를 공유하며 Firebase Auth Console 페이지에서 싱글 유저 진입에 대해 띄워줄 것이다.
 
+### `참고자료`
 How to Firebase? : [Chris Esplin](https://howtofirebase.com/firebase-authentication-for-web-d58aad62cf6d)<br>

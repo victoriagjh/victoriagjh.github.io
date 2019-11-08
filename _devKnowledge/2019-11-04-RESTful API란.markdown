@@ -103,6 +103,6 @@ RMM - Richardson Maturity Model<br>
   Update를 보냈으면, 응답으로 API를 쓸수있는 링크가 온다. -> 리퀘스트를 보내면, 그 다음 리퀘스트에 대한 엔드포인트를 응답으로 보내준다.<br>
   EX) 내가 카카오톡에 어떤 친구를 차단 요청을 보냈을 때, 그 응답으로 해당 친구를 채팅방에서 다 지울 수 있는 API의 링크가 응답으로 나에게 돌아오고, 나는 그 응답을 이용하여 다시 api를 호출함으로 내가 있는 채팅방에 그 친구들 다 없앨 수 있다.<br>
 
-### 참고자료
+### `참고자료`
 REST API 제대로 알고 사용하기 : [TOAST Meetup!](https://meetup.toast.com/posts/92)<br>
 REST API란? : [ijbgo](https://ijbgo.tistory.com/20)<br>
