@@ -1,0 +1,82 @@
+---
+title:  "JWT(JSON Web Token)에 대하여"
+date: 2019-11-08 16:00:00
+description: The history of Development Study
+categories: [devKnowledge]
+resource: true
+comments: true
+---
+# JWT(JSON Web Token)에 대하여
+### `JSON Web Token`
+REST API에 대한 보안과 인증이 화두가 되면서 OAuth가 많이 언급되곤한다. 근래에 들어서 화두가 되고 있는 것은 JWT(JSON Web Token)이라는 표준이다.<br>
+![Image]({{ site.baseurl }}/images/jwt_content.png)<br>
+
+### `Claim 기반 토큰의 개념`
+OAuth에 의해서 발급되는 access_token은 random string으로 토큰 자체에는 특별한 정보를 가지고 있지 않는 일반적인 스트링 형태입니다. <br>
+
+API나 서비스를 제공하는 서버는 access_token을 통해 사용자에 연관된 권한을 식별한 뒤에 권한을 허용해주는 구조이다. 즉 서비스를 제공하는 입장에서는 토큰을 가지고, 그 토큰과 연관된 정보를 서버쪽에서 찾아야 한다.
+JWT는 Claim 기반의 방식을 사용하는데, Claim이라는 사용자에 대한 프로퍼티나 속성을 이야기한다. 토큰 자체가 정보를 가지고 있는 방식인데, JWT는 이 Claim을 JSON을 이용해 정의한다.
+<br>
+{% highlight python %}
+{
+    "id":"terry"
+    ,"role":["admin","user"]
+    ,"company":"pepsi"
+}
+{% endhighlight %}
+이 JSON 자체를 토큰으로 사용하는 것이 Claim 기반의 토큰 방식이다. <br>
+이 토큰을 이용해 요청을 받는 서버나 서비스의 입장에서는, 서비스를 호출한 사용자에 대한 추가 정보는 이미 토큰안에 들어있기 때문에, 다른 곳에서 가져올 필요가 없다. <br>
+
+### `OAuth 토큰 흐름`
+![Image]({{ site.baseurl }}/images/oauth_token.png)<br>
+1. API 클라이언트가 Authorization Server(토큰 발급서버)로 토큰을 요청한다. 이때 토큰 발급을 요청하는 사용자의 계정과 비밀번호를 넘기고,  이와 함께 토큰의 권한(용도)을 요청한다.
+2. 토큰 생성 요청을 받은 Authorization Server는 사용자 계정을 확인한 후, 이 사용자에게 요청된 권한을 부여해도 되는지 시스템에 물어본 후, 토큰을 발급하고 토큰에 대한 정보를 내부(토큰 저장소)에 저장해둔다.
+3. 이렇게 생성된 토큰은 API 클라이언트로 저장이 된다.
+4. API 클라이언트는 API를 호출할 때, 이 토큰 **(access_token)** 을 이용해서 Resource Server에 있는 API를 호출한다.
+5. Resource Server가 토큰 저장소에서 토큰에 관련된 사용자 계정, 권한에 대한 정보를 가져온다.
+6. API 서버는 응답을 보낸다.
+
+### `JWT와 같은 Claim 기반의 토큰 흐름`
+1. 토큰을 생성 요청하는 방식은 동일하다. 마찬가지로 사용자를 인증한 다음에 토큰을 생성한다.
+2. 다른 점은 생성된 토큰에 관련된 정보를 별도로 저장하지 않는다! 토큰에 연관되는 사용자 정보나 권한 등을 토큰 자체에 넣어서 저장한다.
+3. API를 호출하는 방식도 동일하다.
+4. Resource Server는 토큰내에 들어있는 사용자 정보를 가지고 권한인가 처리하고 결과를 리턴한다.
+
+### `JWT 이전의 Claim 기반의 토큰`
+XML기반의 SAML 2.0이 이와 비슷한 개념을 가지고 있었다. Assertion이라는 개념으로 XML안에 이러한 Claim 정보를 넣어서 넘길 수 있었으나, 문제점은 전체적인 사이즈가 너무 크고 구조가 복잡하여 쉽게 접근이 어려웠다.
+더군다나 크기가 크기 때문에 API를 자주 호출하는 경우, HTTP 헤더 같은 곳에 실어서 보내기가 어렵고 파싱을 하기에 오버헤드가 크기 때문에 적절하지 않았다.
+JWT는 이 JSON Claim을 BASE64로 인코딩하여 HTTP Header에 쉽게 넣을 수 있으며, JSON기반이기 때문에 파싱과 사용이 쉽다.
+##### < 요약 >
+> Cliam 기반의 토큰은 토큰 자체가 정보를 담음으로써, 토큰을 가지고 서비스나 API 접근을 제어할 때 별도의 작업이 서버에서 필요하지 않으며, 토큰 자체를 서버에서 관리할 필요가 없기 때문에 구현이 상대적으로 단순해진다.
+
+### `JWT에 대한 소개`
+- Claim 메시지 정의 : JSON은 "\n"등의 개행문자가 있기 때문에, REST API 호출 시 HTTP Header등에 넣기가 매우 불편하다. 그래서 **BASE64 인코딩을 통해 하나의 문자열로 변환한다.** <br>
+BASE64 인코딩 결과 : ew0KICAiaWQiOiJ0ZXJyeSINCiAgLCJyb2xlIjpbImFkbWluIiwidXNlciJdDQogICwiY29tcGFueSI6InBlcHNpIg0KfQ0K <br>
+
+### `변조 방지`
+##### 토큰을 변조해서 사용하게 되면 어떻게 막을 수 있을까? <br>
+메세지가 변조되지 않았음을 증명하는 것을 무결성이라고 한다. 무결성을 보장하는 방법 중 가장 많이 사용되는 방법이 **서명(Signature)이나 HMAC 방식** 이다. <br>
+HMAC : 원본 메시지에서 해쉬값을 추출한 후, 이를 비밀 키를 이용해 복호화시켜서 토큰의 뒤에 붙인다.  
+  👉 변조된 메시지에서 생성되는 해시값과 토큰 뒤에 붙어있는 HMAC값이 다르기 때무에 메시지가 변조되었음을 알 수 있다.
+  👉 새로운 HMAC값을 만드려 해도, 비밀 키를 모르기 때문에 HMAC을 만들 수 없다.
+
+### 전체 메시지 포맷
+![Image]({{ site.baseurl }}/images/jwt_message.png)<br>
+- 서명방식이 있는 JSON을 BASE64로 인코딩
+- JSON Claim을 BASE64로 인코딩
+
+### `JWT의 문제점`
+1. 길이
+Claim에 넣는 데이터가 많아질수록, JWT 토큰의 길이가 길어진다. API 호출등에 사용할 시에, 매 호출마다 헤더에 붙어서 가야하기 때문에, 길이가 길다는 것은 그만큼 네트워크 대역폭 낭비가 심하다는 의미이다.<br>
+
+2. 한번 발급된 토큰은 값을 수정하거나 폐기가 불가하다.
+JWT는 토큰 내에 모든 정보를 다 가지고 있기때문에, 한번 발급된 토큰에 대한 변경은 서버에서 불가능하다.<br>
+  👉 JWT를 쓴다면, Expire Time을 명시적으로 두도록 하고, refresh token등을 이용해서 중간중간 토큰을 재발행하도록 해야한다.<br>
+
+3. 보안
+JWT는 기본적으로 Claim에 대한 정보를 암호화하지 않는다. BASE64로 인코딩하기 때문에, 중간에 패킷을 가로채거나 기타 방법으로 토큰을 취득했으면 토큰 내부 정보로 사용자 정보가 누출될 수 있다.<br>
+특히 자바스크립트 기반의 웹 클라이언트의 경우, 브라우저상의 디버거등을 이용해 토큰이 노출될 가능성이 높다. <br>
+  👉 이를 보완하는 방법으로, 토큰 자체를 암호화하는 방법이 있다. JSON을 암호화하기 위한 스펙으로 JWE(JSON Web Encryption)이 있다.<br>
+
+### `참고자료`
+REST JWT이란? : [12bme](https://12bme.tistory.com/130)<br>
