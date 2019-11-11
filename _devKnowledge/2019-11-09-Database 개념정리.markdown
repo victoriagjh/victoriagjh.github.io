@@ -1,5 +1,5 @@
 ---
-title:  "Database 개념 간단정리"
+title:  "Database 개념 정리"
 date: 2019-11-09 14:30:00
 description: The history of Development Study
 categories: [devKnowledge]
