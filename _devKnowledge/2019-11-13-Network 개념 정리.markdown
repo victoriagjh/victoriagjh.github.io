@@ -1,6 +1,6 @@
 ---
 title:  "Network 개념정리"
-date: 2019-11-10 11:30:00
+date: 2019-11-13 11:30:00
 description: The history of Development Study
 categories: [devKnowledge]
 resource: true
