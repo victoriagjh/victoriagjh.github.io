@@ -60,5 +60,4 @@ PNG 파일은 비손실 압축 방식이라 원본이 훼손되지 않는다. �
 실사 이미지같이 자연스럽고 복잡한 이미지라면 JPG 파일 형식이 더 좋고, 깨끗한 이미지를 얻기위해 인공적으로 만든 디자인의 경우 PNG 압축이 더 유리하다.
 
 ### `참고자료`
-신입 개발자 면접용 컴퓨터공학 기본지식 : [Patrasche](http://softwarepatrasche.blogspot.com/2016/04/blog-post.html)<br>
-네트워크의 기본 계층 구조 : [ryusae](https://ryusae.tistory.com/4)<br>
+멀티미디어 수업 : [박광훈 교수님]<br>
