@@ -1,0 +1,73 @@
+---
+title:  "1937_욕심쟁이 판다"
+date: 2019-11-17 19:14:00
+
+categories: algorithm
+comments: true
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/1937.png)
+<br>
+
+### `Concept & Idea`
+DFS나 BFS만으로 해결을 하려고하면 안되는 문제이다. 시간초과가 나기 때문에, 이미 내가 왔던 곳은 탐색하지 않는다라는 개념을 가지고 해결해야한다. <br>
+초기 조건부터 dp[x][y]가 true라면 바로 값을 반환하게 코드를 구현하였다. <br>
+왜 조건문에 dp[x][y]+1>dp[curi][curk]일 때 수행하지 못하는지 의문이다.. <br>
+
+### `Code`
+{% highlight c++ %}
+#include <iostream>
+#include <queue>
+using namespace std;
+int n,map[501][501],res=-1;
+struct node{
+    int x,y;
+    bool operator()(node a, node b){
+        return map[a.x][b.y]>map[b.x][b.y];
+    }
+};
+int dp[501][501];
+int dx[4]={1,-1,0,0};
+int dy[4]={0,0,1,-1};
+int dfs(int x,int y){
+    if(dp[x][y])
+        return dp[x][y];
+    dp[x][y]=1;
+    for(int i=0; i<4; i++) {
+        int curi = x + dx[i];
+        int curk = y + dy[i];
+        if(curi>=0 && curi<n && curk>=0 && curk<n && map[curi][curk]> map[x][y]) {
+            dp[x][y]=max(dp[x][y],dfs(curi,curk)+1);
+        }
+    }
+    return dp[x][y];
+}
+int main(){
+    cin>>n;
+    for(int i=0;i<n; i++) {
+        for(int j=0; j<n; j++) {
+            cin>>map[i][j];
+        }
+    }
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            res = max(res,dfs(i,j));
+        }
+    }
+    cout<<res<<endl;
+}
+
+{% endhighlight %}
+
+### `Fealing`
+DFS와 DP가 결합된 문제였다.. 나는 DP[x][y]+1>DP[curi][curk]라면 무조건 탐색을 다시 해도 된다고 생각했는데, 그것이 아니었나보다..
+DP의 값이 0이 아니면 바로 리턴하게 코드를 짜놓았는데도,, 잘 해결이 되지 않았다..
+그래도 생각한 것은 거의 맞았던 것 같은데 왜 정확하게 맞았는지 의문이다.. 나는 DFS함수를 int형 타입으로 하지 않아서 그렇게 두지 않으려고 노력했는데.. 아쉽다.
+
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.
+
+[Vic's gist]: https://gist.github.com/victoriagjh/ceab05b55cc75b12ad8e5043b0b6544a
