@@ -9,7 +9,7 @@ comments: true
 # Network 개념 정리
 ### `TCP/IP 계층`
 TCP/IP는 인터넷에서 컴퓨터들이 서로 정보를 주고받는데, 통신 규약(프로토콜)의 모음이다.
-![Image]({{ site.baseurl }}/images/tcp/ip_4.png)<br>
+![Image]({{ site.baseurl }}/images/tcpip_4.png)<br>
 1. 1계층 - Network Access Layer
 OSI 7계층에서 물리계층과 데이터링크 계층에 해당한다. 하드웨어적인 요소와 관련되는 모든 것을 지원하는 계층이다.
 송신측 컴퓨터의 경우, 상위계층으로 전달받은 패킷에 물리적인 주소는 MAC 주소를 가지고 헤더를 추가하여 만들고, 프레임을 하위계층인 물리계층으로 전달한다.<br>
