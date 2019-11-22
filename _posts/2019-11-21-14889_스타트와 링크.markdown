@@ -1,0 +1,83 @@
+---
+title:  "14889_스타트와 링크"
+date: 2019-11-21 16:16:00
+
+categories: algorithm
+comments: true
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/14889.png)
+<br>
+
+### `Concept & Idea`
+간단한 완전탐색 문제였다. n도 최대 20밖에 안되서 dfs로 쉽게 해결할 수 있었다.
+코드도 나름 깔끔하게 짰다고 생각하는데,, startScore랑 linkScore를 어떻게 하면 함수를 합칠 수 있을것 같은데,, 나름 만족한다.
+
+### `Code`
+{% highlight c++ %}
+#include <iostream>
+#include <vector>
+using namespace std;
+int n,map[21][21];
+bool check[21];
+int res=2000001;
+int startScore(vector<int> start){
+    int cnt=0;
+    for(int i=0; i<start.size(); i++) {
+        for(int j=i+1; j<start.size(); j++) {
+            cnt+=map[start[i]][start[j]]+map[start[j]][start[i]];
+        }
+    }
+    return cnt;
+}
+int linkScore(){
+    int cnt=0;
+    vector<int> link;
+    for(int i=1; i<=n; i++) {
+        if(!check[i])
+            link.push_back(i);
+    }
+    for(int i=0; i<link.size(); i++) {
+        for(int j=i+1; j<link.size(); j++) {
+            cnt+=map[link[i]][link[j]]+map[link[j]][link[i]];
+        }
+    }
+    return cnt;
+}
+void dfs(int x, vector<int> start){
+    if(start.size()==n/2) {
+        int sta=startScore(start);
+        int lin=linkScore();
+        res=min(res,abs(sta-lin));
+    } else {
+        for(int i=x+1; i<=n; i++) {
+            check[i]=true;
+            start.push_back(i);
+            dfs(i,start);
+            start.pop_back();
+            check[i]=false;
+        }
+    }
+}
+int main(){
+    cin>>n;
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++)
+            cin>>map[i][j];
+    }
+    vector<int> temp;
+    dfs(0,temp);
+    cout<<res<<endl;
+}
+{% endhighlight %}
+
+### `Fealing`
+간단한 완전탐색 문제였다. 간단해서 리뷰를 쓰지않아도 되긴 하지만,, 그냥 코드를 잘 짠것같아서 올려보았다.
+문제를 보고 겁만 안내면 좋을 것 같은데,, 겁을 내서 문제다 😢
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.<br>
+
+[Vic's gist]: https://gist.github.com/victoriagjh/0cc64993f9c456439fcb25fcafea4194
