@@ -64,5 +64,21 @@ test1();
 호출 스택의 많은 작업을 처리하다 보면, 화면이 오랫동안 응답을 하지 못하게 된다.
 이러한 상황에서 렌더링 동작을 방해하지 않고, 브라우저의 응답도 끊지 않으면서, 연산량이 맣은 코드를 실행하려면 **비동기 콜백** 을 사용해야 한다. <br>
 
+
+### `JavaScript의 처리속도`
+자바스크립트는 싱글스레드로 한번에 하나의 작업만 가능하다. 하나의 Call Stack이 존재하여, 한번에 하나의 작업이 수행되는데, 어떻게 동시성이 가능한 것일까?<br>
+- 자바스크립트는 함수가 어떤 함수가 실행되고 있을 때, 그 실행이 끝나기 전까지 다른 함수가 실행되지 못한다. **Run to Completion**<br>
+
+1. Web API
+Web API는 브라우저에서 제공되는 API이며, AJax나 Timeout같은 비동기 작업을 실행합니다. 자바스크립트에서 setTimeout함수를 실행하면, 자바스크립트 엔진은 Web API에 setTimeout을 요청하고, 동시에 setTimeout에 넣어준 Callback까지 전달된다. CallStack에서는 Web API 요청 이후, setTimeout이 종료되기 때문에 제거된다.
+그래서 Web API는 방금 요청받은 setTimeout을 완료하고, 전달받은 Callback을 Task Queue에 넘겨준다.
+
+2. Task Queue와 Event Loop
+Task Queue는 Callback Queue라고도 하는데, 큐 형태로 Web API에서 넘겨받은 Callback 함수를 저장한다. 이 Callback 함수들은 자바스크립트 엔진의 CallStack이 비었을 떼, push된다.
+이때, Event Loop에서 Call Stack이 비어있는지 아닌지, Task Queue가 존재하는지 아닌지 판단하는 역할을 맡는다.
+
+
+
+
 ### `참고자료`
 JavaScript 작동 원리에 대해서 : [k39335](https://k39335.tistory.com/9)<br>
