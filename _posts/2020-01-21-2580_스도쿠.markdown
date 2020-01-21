@@ -9,7 +9,7 @@ comments: true
 <br>
 
 ### `Problem`
-![Image]({{ site.baseurl }}/images/9663.png)
+![Image]({{ site.baseurl }}/images/2580.png)
 <br>
 
 ### `Concept & Idea`
