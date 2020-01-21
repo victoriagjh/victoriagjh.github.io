@@ -1,0 +1,64 @@
+---
+title:  "9663_N-Queen"
+date: 2020-01-21 16:16:00
+
+categories: algorithm
+comments: true
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/9663.png)
+<br>
+
+### `Concept & Idea`
+돌아가는 포문의 i는 col을 의미한다.
+map[i]의 값은 배치된 queen의 행값이다. isPossible 함수에서 같은 열에 위치되있거나 대각선방향에 있을 경우, 다음 위치로 이동하지 않는다.
+처음엔 map[15][15]라는 배열을 만들었는데, 그렇게 푸는 것이 아니라 내가 있는 위치를 기록함으로써 메모리를 줄일 수 있었다.
+
+### `Code`
+{% highlight c++ %}
+#include <iostream>
+using namespace std;
+int n,map[16];
+int res=0;
+bool isPossible(int x){
+    for(int i=1; i<x; i++) {
+        if(map[x]==map[i] || abs(x-i) == abs(map[x]-map[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+void dfs(int x){
+    if(x==n) {
+        res++;
+        return;
+    }
+    for(int i=1; i<=n; i++) {
+        map[x+1]=i;
+        if(isPossible(x+1)) {
+            dfs(x+1);
+        }
+        map[x+1] = 0;
+    }
+}
+int main() {
+    cin>>n;
+    for(int i=1; i<=n; i++) {
+        map[1]=i;
+        dfs(1);
+        map[1]=0;
+    }
+    cout<<res<<endl;
+}
+
+{% endhighlight %}
+
+### `Fealing`
+너무 오랜만에 풀어낸 알고리즘 문제라서 머리가 너무 잘 안돌아갔다.. 다시 내 머리가 돌아왔으면 좋겠다..
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.<br>
+
+[Vic's gist]: https://gist.github.com/victoriagjh/72fdb8e76d64ea9a3a19e26ecbef99c5
