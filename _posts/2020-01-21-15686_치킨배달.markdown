@@ -1,0 +1,79 @@
+---
+title:  "15686_치킨배달"
+date: 2020-01-29 21:16:00
+
+categories: algorithm
+comments: true
+---
+
+<br>
+
+### `Problem`
+![Image]({{ site.baseurl }}/images/15686.png)
+<br>
+
+### `Concept & Idea`
+dfs를 이용해서 치킨집을 갯수만큼 정해주고,
+만약 m과 치킨집의 수가 맞으면 각 좌표값을 이용하여 집집마다의 치킨 거리를 계산할 수 있는 문제였다.
+
+### `Code`
+{% highlight c++ %}
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+int n,m;
+vector<pair<int, int>> chicken, house;
+long mins=9999999999;
+void dfs(int x, vector<pair<int, int>> v){
+    if(v.size()==m) {
+        int nu=0;
+        for(int i=0; i<house.size(); i++) {
+            int distance = 101;
+            for(int j=0; j<v.size(); j++) {
+                if(abs(house[i].first-v[j].first)+abs(house[i].second-v[j].second)<distance)
+                    distance=abs(house[i].first-v[j].first)+abs(house[i].second-v[j].second);
+            }
+            nu+=distance;
+        }
+        if(nu<mins)
+            mins=nu;
+    } else {
+        for(int j=x+1; j<chicken.size(); j++) {
+            v.push_back(chicken[j]);
+            dfs(j, v);
+            v.pop_back();
+        }
+    }
+}
+int main() {
+    cin>>n>>m;
+    for(int i=1; i<=n; i++) {
+        for(int j=1; j<=n; j++) {
+            int t;
+            cin>>t;
+            if(t==2) {
+                chicken.push_back({i,j});
+            }
+            if(t==1) {
+                house.push_back({i,j});
+            }
+        }
+    }
+    vector<pair<int, int>> ve;
+    ve.push_back(chicken[0]);
+    dfs(0,ve);
+    ve.pop_back();
+    dfs(0,ve);
+    cout<<mins<<endl;
+}
+{% endhighlight %}
+
+### `Fealing`
+후하하하하핳
+
+Check out this code in [Victoria's Gist][Vic's gist]. Please Comment my code in this link.<br>
+
+[Vic's gist]: https://gist.github.com/victoriagjh/c8fb14f2db11db87feb43e95cbc5536b
