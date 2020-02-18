@@ -1,0 +1,107 @@
+---
+title:  "스프링_개념_#1"
+date: 2020-02-18 21:00:00
+description: The history of Development Study
+categories: [devKnowledge]
+resource: true
+comments: true
+---
+
+# 프레임 워크란?
+### `FrameWork`
+👉 소프트웨어의 구체적인 부분에 해당하는 설꼐와 구현을 재상용이 가능하게끔 일련의 형태(클래스)들을 제공하는 것 <br>
+
+### `Library`
+👉 재사용이 가능한 필요기능으로 반복적인 코드 작성을 없애기 위해 언제든지 필요한 곳에서 호출하여 사용할 수 있도록 Class나 Function으로 만들어진 것 <br>
+
+### `프레임워크 V.S. 라이브러리`
+프레임워크는 내가 개발을 하기 위해서 지켜야하는 툴이라면, 라이브러리는 내가 개발을 하기 위해 필요로 하는 구현되어있는 대상을 말한다. <br>
+
+### `프레임워크의 예시`
+- 자바 프레임워크 : Struts, Spring
+- 자바스크립트 프레임워크 : AngularJS, React, Koa
+- 프론트엔드 프레임워크 : BootStrap, Foundation, MDL
+
+### 프레임워크의 장단점
+1. 장점
+- 효율적이다 👉 프로그래밍을 하는 시간과 비용이 훨씬 절약되고 생산성이 좋아진다.(틀을 제공해주기 때문)
+- Quality 향상 👉 버그 발생 가능성을 처리해줌으로써 실수하기 쉬운 부분을 커버해준다.
+- 유지 보수 Good 👉 어떤 사람이 개발을 하게되더라도, 해당 프레임워크의 원리를 이해하는 사람이라면 담당자가 바뀌어도 유지보수가 용이해진다.
+
+2. 단점
+- 학습 시간이 길다
+- 제작자의 의도된 제약사항이 존재 👉 자유롭고 유연하게 개발하는데 한계가 있음
+
+# 스프링 컨테이너란? IoC란?
+### `스프링 컨테이너`
+**인스턴스의 생명주기를 관리, 생성된 인스턴스들에게 추가적인 기능을 제공하도록 하는 것** <br>
+👉 컨테이너란 내가 작성한 코드의 처리과정을 위임받은 독립적인 존재로 **내 코드를 스스로 참조한 뒤 알아서 객체의 생성과 소멸을 컨트롤해준다.** <br>
+
+**Servlet : 자바를 이용하여 웹을 만들기 위해 필요한 기술을 말한다.** <br>
+- 클라이언트의 요청에 대해 동적으로 작동하는 웹 어플리케이션 컴포넌트
+- html을 사용하여 요청에 응답한다.
+- Java Thread를 이용하여 동작한다.
+- MVC 패턴에서 Controller로 이용된다.
+- HTTP 프로토콜 서비스를 지원하는 javax.servlet.http.HttpServlet 클래스를 상속받는다 (UDP보다 느림)
+- HTML 변경 시 Servlet을 재컴파일해야 하는 단점이 있다.
+
+> Servlet 컨테이너 : Servlet의 생성, 생성 후 초기화, 서비스 실행, 소멸에 관한 모든 권한을 가지고 있다. 개발자들이 직접 Servlet을 생성하고 서비스하지는 않는다. 고로, Servlet 컨테이너는 Servlet 인스턴스에 대한 생명주기를 관리하는 기능을 가진다. <br>
+web.xml을 보면, JSP/Servlet 접근 권한에 대한 추가적인 서비스도 지원하는데, 이는 각 JSP/Servlet에 대한 Security를 관리해주는 기능을 한다. <br>
+
+- 스프링 컨테이너는 스프링 프레임워크의 핵심부에 위치하며, 종속 객체 주입을 이용하여 어플리케이션을 구성하는 컴포넌트를 관리한다.
+- 컨테이너가 객체를 생성하는 것이 아니라 프로그램을 이용하는 이용자의 호출에 따라 컨테이너가 동작하게 되는 구조임.
+
+> 스프링 컨테이너를 왜 사용하는 걸까? <br>
+어떤 객체를 사용하기 위해 new 생성자를 이용하여 getter/setter 기능을 써야하는데, 이러한 객체는 무수히 많이 존재하고 서로 참조하고 있을 것이디. **스프링은 이러한 객체간의 의존성을 낮추기 위해 Spring 컨테이너를 사용한다.** <br>
+
+![Image]({{ site.baseurl }}/images/ioc_container.png)
+👉 IoC 객체에는 어떠한 객체를 만들어내는 기계가 존재함. IoC 컨테이너안에 존재하는 객체는 어떠한 객체를 생성하는 역할을 하고, IoC 컨테이너는 요청에 맞게 생성한 객체를 주입함.
+
+### `IoC/DI 컨테이너란? - Inversion of Control 제어의 역전`
+IoC 컨테이너는 객체의 생성을 책임지고, 의존성을 관리한다. (의존성을 낮추기 위해 존재) <br>
+POJO의 생성, 초기화, 서비스, 소멸에 대한 권한을 가진다. 👉 POJO(Plain Old Java Object) - 오래된 방식의 자바 객체 <br>
+POJO : 특정 자바 모델이나 기능, 프레임워크를 따르지 않는 Java Object를 지칭한다(getter,setter) <br>
+
+# SingleTon과 스프링에서의 SingleTon
+### `SingleTon이란?`
+싱글톤이란 해당 클래스의 인스턴스 하나가 만들어지는 전역변수 같은 것. <br>
+👉 인스턴스가 사용될 때 어떤 인스턴스를 생성하는 것이 아니라 동일 인스턴스를 사용하게끔하는 것. <br>
+👉 프로그램상에서 동일한 객체를 만들거나, 하나만 사용되어야 하는 객체를 만들때 매우 유용함. <br>
+
+### `Spring에서의 SingleTon`
+- DBCP(Database Connection Pool) 
+- Thread Pool
+- 대화상자
+- 로그 기록 객체
+- 사용자 설정
+- 레지스트리 설정
+
+👉 Connection Pool과 같은 인스턴스의 경우, 데이터베이스를 n번 조회해야 할때  n개를 생성해야 하는데, GC(Garbage Collector)가 사용중이지 않은 인스턴스를 정리해준다고 해도, 서버에 많은 부하가 가고 메모리가 많이 소모된다. <br>
+
+
+# `Bean이란? Bean Factory란?`
+Spring Beans : 스프링 IoC 컨테이너에서 만들어지는 자바 (어플리케이션의 핵심을 이루는)객체 <br>
+- 스프링 컨테이너가 생성하고 관리하는 어플리케이션 객체 == POJO <br>
+- Bean과 Bean 사이의 의존성은 컨테이너가 사용하는 메타데이터 환경설정에 의해 반영된다.
+- Beans는 컨테이너에 공급하는 설정 메타 데이터(XML 파일)에 의해 생성됨.
+
+### Spring Bean Scope
+**스프링은 기본적으로 모든 bean을 singleton으로 생성하여 관리한다.** <br>
+- 구체적으로 어플리케이션 구동 시, JVM안에서 스프링이 bean마다 하나의 객체를 생성하는 것을 의미한다.
+- 그래서 개발자는 스프링을 통해 bean을 제공받으면, 언제나 주입받은 bean은 동일한 객체라는 가정하에서 개발을 한다.
+
+# `의존성 주입(Dependency Injection)`
+- 객체 자체가 아니라 Framework에 의해서 객체의 의존성이 주입되는 설계 패턴
+- Framework에 의해 동적으로 주입되므로, 여러 객체간의 결합이 줄어든다.
+![Image]({{ site.baseurl }}/images/dependency_injection.png)
+- Bean Container가 bean객체를 생성하고, 종속성을 주입한다.
+- IoC는 DI를 통해 달성한다. 
+
+1. Constructor Injection - 생성자를 통한 전달
+    - <constructor-arg ref="cat"></constructor-arg>
+2. Method(Setter) Injection - setter()를 통한 전달
+    - <property name="myName" value="poodle"></property>
+3. Field Injection - 멤버 변수를 통한 전달
+
+### `참고자료`
+프레임워크란? : [moolgogiheart] https://moolgogiheart.tistory.com/87 <br>
