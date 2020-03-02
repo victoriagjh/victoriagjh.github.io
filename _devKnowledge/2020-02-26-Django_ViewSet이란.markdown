@@ -21,11 +21,3 @@ View Set을 위한 method 핸들러들은 as_view()함수를 이용해 view가 �
 - viewsets.ReadOnlyModelViewSet : 읽기 전용 기능을 자동으로 지원한다
 - queryset과 serializer_class 
 
-
-
-##### 각 앱에서 의존성을 주의하자!
-👉 하나의 앱에서 두가지 문제를 해결하면 이를 둘로 나누는 것이 좋다.
-👉 두가지 앱이 서로 얽혀있으면, 다른 앱 없이 재사용할 수 없을 땐 이를 단일앱으로 결합시키세요.
-
-### `참고자료`
-스택오버플로우 : [stackoverflow](https://stackoverflow.com/questions/19350785/what-s-the-difference-between-a-project-and-an-app-in-django-world)  <br>
