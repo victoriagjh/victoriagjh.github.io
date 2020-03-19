@@ -1,0 +1,18 @@
+---
+title:  "OWASP_TOP_10"
+date: 2020-03-09 15:00:00
+description: The history of Development Study
+categories: [devKnowledge]
+resource: true
+comments: true
+---
+# OWASP 시큐어 코딩에 대해 공부해보자
+### `OWASP란?`
+Open Web Application Security Project란 가장 큰 오픈소스 웹 어플리케이션 보안 프로젝트로 주로 웹에 관한 정보 노출, 악성 파일 및 스크립트, 보안 취약점들을 연구하며 10대 웹 어플리케이션 취약점을 발표합니다. <br>
+
+
+ <br>
+👉
+
+### `참고자료`
+ : [] ()  <br>
