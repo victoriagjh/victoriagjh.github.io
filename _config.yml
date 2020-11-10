@@ -29,6 +29,11 @@ defaults:
       layout: "post"
   - scope:
       path: ""
+      type: "python_design_pattern"
+    values:
+      layout: "python_design_pattern"
+  - scope:
+      path: ""
       type: "devKnowledge"
     values:
       layout: "devKnowledge"

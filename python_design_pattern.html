@@ -1,0 +1,12 @@
+---
+title: All PDP
+---
+<div class="container">
+  <div id="article">
+  <h1>Python Design Pattern</h1>
+  <ul class="posts">
+    {% for pdp in site.python_design_pattern %}
+    <li><span><a href="{{ site.baseurl }}{{ post.url }}">{{ pdp.title }}</a><time class="pull-right post-list">{{ pdp.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
+    {% endfor %}
+  </ul>
+</div>
