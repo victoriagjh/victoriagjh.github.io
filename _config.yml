@@ -9,7 +9,7 @@ facebook: https://www.facebook.com/akrso06197.victan
 email: akrso06197@naver.com
 location: 42°2'16"N   70°12'47"W
 disqus : vicsinth
-category-list: [code, editors, django,devKnowledge, unix]
+category-list: [code, editors, django, devKnowledge, unix, python_design_pattern]
 
 highlighter: rouge
 markdown: kramdown
@@ -40,6 +40,8 @@ defaults:
 
 collections:
   devKnowledge:
+    output: true
+  python_design_pattern:
     output: true
 
 layout: default
