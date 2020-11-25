@@ -50,3 +50,4 @@ comments: true
 
 ### `참고자료`
 배포 전략의 종류 : [reference-m1](https://reference-m1.tistory.com/211)  <br>
+배포 전략 : [poikilo](https://poikilo.github.io/2020/03/03/deployment-strategy/)<br/>
