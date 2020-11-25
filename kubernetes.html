@@ -1,0 +1,12 @@
+---
+title: All Kubernetes
+---
+<div class="container">
+  <div id="article">
+  <h1>Kubernetes</h1>
+  <ul class="posts">
+    {% for kuber in site.kubernetes %}
+    <li><span><a href="{{ site.baseurl }}{{ kuber.url }}">{{ kuber.title }}</a><time class="pull-right post-list">{{ kuber.date | date_to_string | date: "%b %-d, %Y"  }}</h4></time></span></span></li>
+    {% endfor %}
+  </ul>
+</div>

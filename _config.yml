@@ -9,7 +9,7 @@ facebook: https://www.facebook.com/akrso06197.victan
 email: akrso06197@naver.com
 location: 42°2'16"N   70°12'47"W
 disqus : vicsinth
-category-list: [code, editors, django, devKnowledge, unix, python_design_pattern]
+category-list: [code, editors, django, devKnowledge, unix, python_design_pattern, kubernetes]
 
 highlighter: rouge
 markdown: kramdown
@@ -34,6 +34,11 @@ defaults:
       layout: "python_design_pattern"
   - scope:
       path: ""
+      type: "kubernetes"
+    values:
+      layout: "kubernetes"
+  - scope:
+      path: ""
       type: "devKnowledge"
     values:
       layout: "devKnowledge"
@@ -42,6 +47,8 @@ collections:
   devKnowledge:
     output: true
   python_design_pattern:
+    output: true
+  kubernetes:
     output: true
 
 layout: default
