@@ -1,6 +1,6 @@
 ---
 title:  "도커이미지 직접 만들기"
-date: 2020-11-27 19:22:00
+date: 2020-11-27 20:22:00
 description: Inflearn
 categories: [docker]
 resource: true
