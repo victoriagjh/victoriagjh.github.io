@@ -1,0 +1,100 @@
+---
+title:  "도커 클라이언트 명령어"
+date: 2020-11-27 19:22:00
+description: Inflearn
+categories: [docker]
+resource: true
+comments: true
+---
+
+# Docker 클라이언트 명령어
+## 기본 실행 명령어
+- docker : docker 클라이언트 언급
+- run : 컨테이너 생성 및 실행
+- <이미지> : 해당 컨테이너를 위한 이미지
+
+## 이미지 내부 파일 시스템 구조 보기
+### `$ docker run <이미지> __명령어___`
+- __명령어__ : 이미지가 가지고 있는 시작 명령어를 무시하고 여기에 있는 커맨드를 실행하게 함
+- 특정 이미지 안에 `ex) ls`라는 명령어를 실행가능하게 하는, 해당 이미지의 파일 스냅샷 안에 ls를 실행할 수 있게 하는 파일이 있어야 실행가능함
+
+## 컨테이너 나열하기
+- `$ docker ps` : process status
+  - CONTAINER ID : 컨테이너 고유한 아이디 해쉬값 (일부분)
+  - IMAGE : 컨테이너 생성시 사용한 도커이미지
+  - COMMAND : 컨테이너 시작시 실행될 명령어, 대부분 이미지에 내장되어 있으므로 별도의 설정이 필요없음
+  - CREATED : 컨테이너가 생성된 시간
+  - STATUS : 컨테이너의 상태
+    - 실행중은 Up, 종료는 Exited, 일시정지 Pause
+  - PORTS :  컨테이너가 개방한 포트와 호스트에 연결한 포트
+  - NAMES : 컨테이너 고유한 이름
+    - 컨테이너 생성시 --name 옵션으로 이름을 설정하지 않으면 도커 엔진이 임의로 형용사와 명사를 조합해 설정함
+    - id와 마찬가지로 중복이 안되고, docker rename 명령어로 변경할 수 있음
+- `$ docker run <이미지> ping localhost` 으로 컨테이너가 살아있는지 확인할 수 있음
+
+### 원하는 항목만 보기
+- `$ docker ps --format 'table{{.Names}} \t table{{.Image}}`
+
+
+### 실행되고 있지 않은, 모든 컨테이너 보기
+- `$ docker ps -a` (-a == all)
+  
+## Docker Lifecycle
+- ![Image]({{ site.baseurl }}/images/docker_lifecycle.png)<br>
+
+1. 생성(create) -> 시작(start) -> 실행(running)
+- `$ docker run <이미지 이름>`
+  - `$ docker create <이미지 이름>` + `$ docker start <시작할 컨테이너 아이디/이름>`
+  - `$ docker create <이미지 이름>`
+    - 이미지에 있는 파일 스냅샷을 컨테이너의 하드디스크에 올려줌
+    - 해당 작업을 한 컨테이너의 id값을 리턴함
+  - `$ docker start -a <시작할 컨테이너 아이디/이름>`
+    - '-a' : attach
+      - 도커 컨테이너가 실행될 때, 해당 컨테이너에서 나오는 output을 모두 화면에 표출해줌
+    - 컨테이너에 프로세스를 시작해줌
+   
+2. 중지
+- 아래 명령어 둘 다 컨테이너를 중지시킴
+- `$ docker stop <중지할 컨테이너 아이디/이름>`
+  - gracefully 하게 중지시킴
+  - 자비롭게 그동안 하던 **작업들을 완료후** 컨테이너들을 중지시킴
+  - SIGTERM을 날려 grace period(정리하는 시간)을 두고, SIGKILL을 날려 정지시킴
+- `$ docker kill <중지할 컨테이너 아이디/이름>`
+  - 바로 컨테이너를 중지시킴
+  - 바로 SIGKILL을 날림
+
+3. 삭제
+- `$ docker rm <삭제할 컨테이너 아이디/이름>`
+  - 실행중인 컨테이너는 중지한 후 가능함
+- 모든 컨테이너를 삭제 : `$ docker rm `docker ps -a -q``
+- 이미지 삭제 : `$ docker rmi <이미지 id>`
+- 한번에 컨테이너, 이미지, 네트워크 모두 삭제 : `$ docker system prune`
+  - 도커를 쓰지 않을때, 모두 정리하고 싶을 때 사용하면 좋음
+  - 이것은 실행중인 컨테이너에는 영향을 주지 않음
+
+## 실행중인 컨테이너에 명령어 전달
+- `$ docker exec <컨테이너 아이디>`
+- docker run __명령어__ v.s. docker exec
+  - run : 새로 컨테이너를 만들어 해당 명령어를 실행시킴
+  - exec : 이미 실행중인 컨테이너에 명령어를 실행시킴
+
+## 레디스를 이용한 컨테이너 이해
+- 레디스 서버가 먼저 작동하고 있어야 함 -> 레디스 클라이언트(redis-cli) 실행 후 명령어를 레디스 서버에 전달
+  1. docker run redis
+  2. redis-cli 
+- 레디스 클라이언트가 레디스 서버가 있는 컨테이너 밖에서 실행을 하려 하니 레디스 서버에 접근을 할 수 없어 에러가 발생
+- 레디스 클라이언트도 컨테이너 안에서 실행을 시켜야 함
+  1. docker run redis
+  2. docker ps
+  3. docker exec -it <컨테이너 아이디> redis-cli
+
+### -it란?
+- `-it`를 붙여줘야 명령어를 실행한 후 계속 명령어를 적을 수 있음
+- `-i` : interactive
+- `-t` : terminal
+- `-it`가 없다면, 그냥 redis-cli를 키고 밖으로 다시 나와버림
+  
+### 실행중인 컨테이너에서 터미널 생활 즐기기 
+- `$ docker exec -it <컨테이너 아이디> <sh/zsh/bash>`
+- 컨테이너를 쉘 환경으로 접근하기가 가능함
+- 
