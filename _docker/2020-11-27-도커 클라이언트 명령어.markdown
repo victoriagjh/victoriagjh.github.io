@@ -97,4 +97,3 @@ comments: true
 ### 실행중인 컨테이너에서 터미널 생활 즐기기 
 - `$ docker exec -it <컨테이너 아이디> <sh/zsh/bash>`
 - 컨테이너를 쉘 환경으로 접근하기가 가능함
-- 
