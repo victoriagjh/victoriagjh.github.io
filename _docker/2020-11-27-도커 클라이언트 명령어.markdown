@@ -52,6 +52,7 @@ comments: true
     - '-a' : attach
       - 도커 컨테이너가 실행될 때, 해당 컨테이너에서 나오는 output을 모두 화면에 표출해줌
     - 컨테이너에 프로세스를 시작해줌
+    - 포그라운드 식으로 이미지를 동작시켰기 때문에, 백그라운드로 실행할 수 없음
    
 2. 중지
 - 아래 명령어 둘 다 컨테이너를 중지시킴
@@ -62,6 +63,8 @@ comments: true
 - `$ docker kill <중지할 컨테이너 아이디/이름>`
   - 바로 컨테이너를 중지시킴
   - 바로 SIGKILL을 날림
+- `$ docker stop $(docker ps -a -q)`
+  - 모든 컨테이너의 아이디를 중지하는 명령어
 
 3. 삭제
 - `$ docker rm <삭제할 컨테이너 아이디/이름>`
@@ -71,6 +74,11 @@ comments: true
 - 한번에 컨테이너, 이미지, 네트워크 모두 삭제 : `$ docker system prune`
   - 도커를 쓰지 않을때, 모두 정리하고 싶을 때 사용하면 좋음
   - 이것은 실행중인 컨테이너에는 영향을 주지 않음
+  - `$ docker volume prune`과 같이 원하는 오브젝트를 전부 지우는 것도 가능함
+- `$ docker rmi $(docker images -f "dangling=true" -q)`
+  - 이름없는 이미지 none || <none>:<none> 이미지 제거
+- `$ docker rm $(docker ps -a -q)`
+  - 모든 컨테이너의 아이디를 삭제하는 명령어
 
 ## 실행중인 컨테이너에 명령어 전달
 - `$ docker exec <컨테이너 아이디>`
@@ -93,6 +101,8 @@ comments: true
 - `-i` : interactive
 - `-t` : terminal
 - `-it`가 없다면, 그냥 redis-cli를 키고 밖으로 다시 나와버림
+- exit 또는 command+C로 종료할 수 있으나, 이는 도커 컨테이너를 종료시키고 빠져나옴
+  - **Command + P,Q 를 입력하면 컨테이너의 쉘에서만 빠져나옴**
   
 ### 실행중인 컨테이너에서 터미널 생활 즐기기 
 - `$ docker exec -it <컨테이너 아이디> <sh/zsh/bash>`
