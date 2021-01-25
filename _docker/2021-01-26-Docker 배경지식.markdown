@@ -1,5 +1,5 @@
 ---
-title:  "Docker 배경지식"
+title:  "혼란스러운 Docker 입문자에게"
 date: 2021-01-26 19:22:00
 description: Inflearn
 categories: [docker]
