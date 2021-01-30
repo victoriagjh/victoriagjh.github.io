@@ -1,7 +1,7 @@
 ---
 title:  "Docker Logging 및 자원할당"
 date: 2021-01-25 19:22:00
-description: Inflearn
+description: Start with Docker/Kubernetes
 categories: [docker]
 resource: true
 comments: true

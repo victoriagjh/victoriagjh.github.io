@@ -1,7 +1,7 @@
 ---
 title:  "Docker Network"
 date: 2021-01-24 19:22:00
-description: Inflearn
+description: Start with Docker/Kubernetes
 categories: [docker]
 resource: true
 comments: true

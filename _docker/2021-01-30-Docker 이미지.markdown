@@ -1,0 +1,105 @@
+---
+title:  "Docker 이미지"
+date: 2021-01-30 19:22:00
+description: Start with Docker/Kubernetes
+categories: [docker]
+resource: true
+comments: true
+---
+
+# Docker 이미지
+## 도커 허브란
+- 도커가 공식적으로 제공하는 이미지 저장소
+- docker create / run / pull 을 수행할 때, 도커 허브에서 해당 이미지를 검색한 후 내려받음
+- 공식 라벨이 없는 이미지는 사용법을 찾을 수 없거나 제대로 동작하지 않게됨
+- `$ docker search`를 통해서 도커 엔진에서 이미지를 찾을 수 있음
+
+## 도커 이미지 생성
+- `docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]`
+- 이미지 테그를 입력하지 않을 시, default는 latest
+```
+docker commit \
+> -a "victoria.k" -m "my_first_commit" \
+> commit_test \
+> commit:first
+```
+- a : author
+  - 이미지의 작성자를 나타내는 메타데이터
+
+## 이미지 구조 이해
+```
+$ docker inspect ubuntu:14.04
+$ docker inspect commit_test:first
+```
+- Layers를 잘 이해해야함
+- ubuntu:14.04를 기반으로 만들어진 이미지 위에 간단한 파일을 추가하는 commit_test라는 이미지가 존재함
+- 이때 이미지를 커밋할때 컨테이너에서 변경된 사항만 새로운 레이어로 저장 & 추가된 레이어를 포함하여 새로운 이미지를 생성하기 때문에 실제 크기는 기본 이미지에 변경된 파일의 크기이다
+- commit_test의 first파일은 ubuntu:14.04
+- 이미지 레이어 구조는 `$ docker history`로 알수 있음
+
+### 이미지 삭제
+- commit_test 삭제 시, 컨테이너가 해당 이미지를 사용중이기 때문에 에러가 남
+- `docker rm -f [컨테이너 이름]` 으로 삭제 시, 이미지 레이어 파일은 삭제하지 않고, 이미지 명만 삭제함
+  - 컨테이너가 사용중인 이미지를 docker rmi -f 로 강제로 지울 시 해당 이미지명이 `<none>` 이 됨
+  - 이런 댕글링 이미지는 `docker images -f dangling=true`로 지울 수 있음
+- 컨테이너 삭제 후 이미지를 지워야함
+```
+docker stop commit_test && docker rm commit_test
+dokcer rmi commit_test:first
+```
+- image을 참조하는 image2가 있을 경우, image 삭제시 하위 이미지가 있기 때문에 실제 이미지 파일은 삭제하지 않고 레이어에 부여된 이름만 삭제함
+  - `Untagged` -> 이미지에 부여된 이름만 삭제한다는 것
+  - `Deleted` -> 실제 이미지 레이어가 삭제되었음
+
+## 이미지 추출
+- 이미지 별도 저장 || 옮기기 || 단일 바이너리 파일로 저장을 해야할 경우
+- `$ docker save` : 아래 항목을 한 파일로 추출가능
+  - 컨테이너의 커맨드
+  - 이미지 이름과 태그
+  - 이미지의 모든 메타데이터
+  - `$ docker save -o ubuntu_14_04.tar ubuntu:14.04`
+    - o 옵션으로 추출될 파일명을 입력 가능
+- `$ docker load`
+  - load 명령어로 다시 도커로 로드가능
+  - `$ docker load -i ubuntu_14_04.tar`
+- `$ docker export` 
+  - 컨테이너의 파일 시스템을 tar파일로 추출하며 컨테이너 및 이미지에 대한 설정 정보를 저장하지 않음
+- `$ docker import`
+  - export로 추출한 이미지를 다시 이미지로 저장
+- ***이미지를 단일 파일로 저장하는 것은 효율적인 방법이 아니다***
+  - 추출된 이미지는 레이어 구조가 아니라 단일 파일이기 때문에, 여러 버전의 이미지를 추출하면 이미지 용량을 각기 차지하여 비효율적이 됨
+
+## 도커 사설 레지스트리 
+### 사설 레지스트리 컨테이너 생성
+```
+docker run -d --name myregistry \
+> -p 5000:5000 \
+> --restart=always \
+> registry:2.6 
+```
+- 개인 서버에 이미지를 저장할 수 있는 저장소를 만들 수 있음
+- 레지스트리는 컨테이너로 구현
+  - restart 
+    - always
+      -  컨테이너가 정지될 때마다 다시 시작하도록 설정
+      - 도커 호스트나 도커 엔진을 재시작하면 컨테이너도 함께 재시작
+    - on-failure
+      - `on-failure:5`
+      - 재시작 횟수를 설정할 수 있음
+      - 컨테이너 종료 코드가 0이 아닐 때, 컨테이너 재시작을 5번까지 시도함
+    - unless-stopped
+      - 컨테이너를 stop 명령어로 정지했을 때, 도커 호스트나 엔진을 재시작해도 컨테이너가 시작되지 않도록 설정
+
+1. 이미지의 접두어를 레지스트리 컨테이너가 존재하는 호스트 IP와 레지스트리 컨테이너의 5000번 포트와 연결된 호스트의 포트 설정
+- `$ docker tag my-registry:0.0 ${DOCKER_HOST_IP}:5000/my-registry:0.0`
+  - `docker tag my-registry:0.0 victoria-study.ay1.krane.9rum.cc:5000/my-registry-0.0`
+- 레지스트리 컨테이너에 이미지 올리기
+  - `$ docker push victoria-study.ay1.krane.9rum.cc:5000/my-registry:0.0`
+    - 에러 발생
+    - 도커 데몬은 HTTPS를 사용하지 않은 레지스트리 컨테이너에 접근하지 못하도록 설정
+    - `--insecure-registry`
+      - HTTPS를 사용하지 않는 레지스트리 컨테이너에 이미지를 Push/Pull 할 수 있도록 설정함
+      - /lib/systemd/system/docker.service 에 다음 항목 추가
+      - `DOCKER_OPTS="--insecure-registry=victoria-study.ay1.krane.9rum.cc:5000"`
+    - Nginx 서버로 접근 권한 생성 -> 책 109p 참고
+
