@@ -1,11 +1,12 @@
 ---
-title:  "DockerFile"
+title:  "Docker"
 date: 2021-01-31 19:22:00
 description: Start with Docker/Kubernetes
 categories: [docker]
 resource: true
 comments: true
 ---
+
 
 # Dockerfile
 ## 이미지 생성 방법
@@ -33,6 +34,7 @@ RUN ["/bin/bash", "-c", "echo hello >> test2.html"]
 EXPOSE 80
 CMD apachectl -DFOREGROUND
 ```
+
 - **FROM**
   - 이미지 생성시, 기반이 되는 이미지 레이어
   - Dockerfile을 작성할 때, 한번 이상 입력해야함
@@ -102,6 +104,7 @@ CMD apachectl -DFOREGROUND
 ### 멀티 스테이지를 이용한 Dockerfile 빌드
 - 하나의 도커파일안에 여러 FROM 이미지를 정의함으로써 빌드 완료 시 최종적으로 생성될 이미지의 크기를 줄일 수 있음
 - Docker 17.05 버전 이상부터 지원
+
 ```
 FROM golang
 ADD main.go /root
@@ -113,6 +116,7 @@ WORKDIR /root
 COPY --from=0 /root/mainApp .
 CMD ["./mainApp"]
 ```
+
 - 두번째 FROM 아래에서 사용되는 COPY 명령어는 첫번째 FROM에서 사용된 이미지의 최종상태에 존재하는 파일을 복사함
   - `--from=0`은 첫번째 이미지의 최종 상태
   - `alpine` || `busybox`
@@ -219,6 +223,7 @@ HEALTHCHECK --interval=1m --timeout=3s --retries=3 CMD curl -f http://localhost 
   - .dockerignore 파일을 작성하여 불필요한 파일을 빌드 컨텍스트에 포함하지 않기
   - 빌드 캐시를 이용해 기존 이미지 레이어를 재사용하기
 - 주의할 점
+
 ```
 # vi Dockerfile
 FROM ubuntu:14.04
@@ -226,6 +231,7 @@ RUN mkdir /test
 RUN fallocate -l 100m /test/dummy
 RUN rm /test/dummy
 ```
+
 - 위 도커 파일의 경우, 100MB의 파일을 할당하고 삭제하기 때문에 이미지 크기가 ubuntu와 비슷할 것 같음
 - BUT 컨테이너를 이미지로 생성할 때, 컨테이너에서 변경된 사항만 새로운 이미지 레이어로 생성하기 때문에 이 파일이 이전 레이어에 저장되어 있음
   - `해결방안`
