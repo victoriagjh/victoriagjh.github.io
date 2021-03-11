@@ -24,7 +24,7 @@ comments: true
 5. amqplib의 불편한점들이 수정됨
 6. carrot을 사용하고 있는 프로젝트를 쉽게 포팅할 수 있음
 
-- `**rabbitmq` 에서 Exchange란?**
+- **`rabbitmq`** 에서 Exchange란?
     - Queue에 전송되기 전에 거쳐가는 라우터
     - 어떤 방식으로 메세지를 전달하냐에 따라 type이 나뉨
         1. fanout
@@ -37,7 +37,7 @@ comments: true
             - 단어의 구분은 .으로 함
         4. header
             - key와 value를 설정하여 선택적으로 메시지를 전달
-- `**Producer**`
+- **`Producer`**
     - producer가 메시지를 publish하는 순서
     - exchange 선언 → queue 선언 → producer 선언 → publish 메시지 전달
     - publish할 때, declare 옵션에 따라 exchange, queue의 존재 여부를 확인하여 생성을 하거나 에러를 발생할 수 있음
@@ -66,9 +66,9 @@ comments: true
         - **auto_delete**
             - 하나 이상의 소비자가 연결된 후에 모든 소비자가 연결이 끊어지면 큐가 삭제됨
             - rabbitmq에 exchange나 queue가 없을 때에도 자동으로 만들어짐
-- `**Consumer` [Reciever]**
+- **`Consumer` [Reciever]**
     - exchange → queue → binding 정보 업데이트
-- `**channel**`
+- **`channel`**
     - 하나의 물리적인 connection 안의 논리적인 connection
     - 비동기 작업을 할때 consumer(worker)를 프로세스나 쓰레드 형태로 여러개를 생성하여 작업을 처리하게 되는데, 이때 각 프로세스나 쓰레드도 물리적인 connection을 맺으면 자원 낭비 &&작업처리의 일관성도 떨어질 것
         - 한 워커가 물리적 연결이 끊기면, 그 워커는 계속 에러를 발생
