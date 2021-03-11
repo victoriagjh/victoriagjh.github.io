@@ -54,18 +54,6 @@ comments: true
                 'mcard.mint': _publisher_default_options,
                 'mcard.single_burn': _publisher_default_options,
                 'mcard.single_mint': _publisher_default_options,
-                'mcard.single_transfer': _publisher_default_options,
-                'mcard.transfer': _publisher_default_options,
-                'transaction.process': _publisher_default_options,
-                'transaction.callback_process': _publisher_default_options,
-                'mtoken.transfer': _publisher_default_options,
-                'mtoken.share': _publisher_default_options,
-                'user.process': _publisher_default_options,
-                'talk_message.send': _publisher_default_options,
-                'mtoken.callback': _publisher_default_options,
-                'service.funding': _publisher_default_options,
-                'service.bulk_refund': _publisher_default_options,
-                'hrdk.process': _publisher_default_options,
             }
             ```
 
