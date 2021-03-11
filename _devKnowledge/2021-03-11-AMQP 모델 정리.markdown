@@ -8,9 +8,7 @@ comments: true
 ---
 
 
-# 2) AMQP
-
-## AMQP
+# AMQP
 
 ### What is AMQP 0-9-1?
 
